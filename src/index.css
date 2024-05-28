@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+:root {
+  --primary-orange: #f85f00;
+  --primary-grey: #222222;
+}
+.text-orange {
+  color: var(--primary-orange);
+}
+.text-grey {
+  color: var(--primary-grey);
+}
+.input-light-text-color {
+  color: var(--primary-grey);
+}
+.input-light-text-color::placeholder {
+  color: var(--primary-orange);
+}
+.glassmorphism-container {
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(107, 107, 107, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+.bg-orange {
+  background: url("/src/assets/bg-orange.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.container-login {
+  @apply w-[90%] max-w-[400px] flex flex-col justify-between items-center m-auto rounded-3xl py-4 px-8;
+}
+.container-flex-col {
+  @apply w-full flex flex-col gap-2 justify-between;
+}
+.container-flex-row {
+  @apply w-full flex gap-2 justify-between;
+}
+.button-orange {
+  @apply px-4 py-2 bg-[var(--primary-orange)] min-w-fit w-[40%] rounded-md text-white hover:bg-orange-700 hover:scale-105 transition-all;
+}
