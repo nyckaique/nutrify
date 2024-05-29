@@ -1,6 +1,6 @@
-import Logo from "../../../components/Logo";
+import Logo from "./Logo";
 import { useContext } from "react";
-import { Context } from "../../../context";
+import { Context } from "../context";
 interface sidebarProps {
   pageid: number;
 }
