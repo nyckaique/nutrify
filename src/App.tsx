@@ -1,13 +1,13 @@
 import { BrowserRouter } from "react-router-dom";
 import { Rotas } from "./routes/routes";
-// import Provider from "@/context";
+import Provider from "./context";
 function App() {
   return (
-    // <Provider>
     <BrowserRouter>
-      <Rotas />
+      <Provider>
+        <Rotas />
+      </Provider>
     </BrowserRouter>
-    // </Provider>
   );
 }
 
