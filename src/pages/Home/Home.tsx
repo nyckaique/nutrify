@@ -1,11 +1,9 @@
-import { useContext } from "react";
-import { Context } from "../../context";
+import Sidebar from "./components/Sidebar";
 export function Home() {
-  const { logout } = useContext(Context)!;
+  // const { } = useContext(Context)!;
   return (
-    <div>
-      <h1>Home</h1>
-      <button onClick={() => logout()}>Logout</button>
+    <div className="min-h-screen p-4 bg-orange">
+      <Sidebar pageid={1} />
     </div>
   );
 }

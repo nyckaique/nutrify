@@ -40,5 +40,8 @@
   @apply w-full flex gap-2 justify-between;
 }
 .button-orange {
-  @apply px-4 py-2 bg-[var(--primary-orange)] min-w-fit w-[40%] rounded-md text-white hover:bg-orange-700 hover:scale-105 transition-all;
+  @apply px-4 py-2 bg-[var(--primary-orange)] min-w-fit rounded-md text-white hover:bg-orange-700 hover:scale-105 transition-all;
+}
+.button-orange-not-selected {
+  @apply px-4 py-2 bg-transparent min-w-fit rounded-md hover:bg-orange-700 hover:scale-105 hover:text-white transition-all;
 }
