@@ -7,6 +7,7 @@ import { createContext, useState, useEffect, ReactNode } from "react";
 import { auth, db } from "../firebase/firebaseConnection";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export interface ProviderProps {
   children: ReactNode;
@@ -61,13 +62,13 @@ export default function Provider({ children }: ProviderProps) {
           };
           setUser(data);
           storageUser(data);
-          alert("Cadastro feio com sucesso");
+          toast.success("Cadastro feio com sucesso");
           navigate("/home");
         });
       })
       .catch((error) => {
         console.log(error);
-        alert("Cadastro deu erro");
+        toast.error("Cadastro deu erro");
       });
   }
 
@@ -85,12 +86,12 @@ export default function Provider({ children }: ProviderProps) {
         };
         setUser(data);
         storageUser(data);
-        alert("Login feio com sucesso");
+        toast.success("Login feio com sucesso");
         navigate("/home");
       })
       .catch((error) => {
         console.log(error);
-        alert("Login deu erro");
+        toast.error("Login deu erro");
       });
   }
 
