@@ -9,14 +9,14 @@ export default function Sidebar({ pageid }: sidebarProps) {
 
   return (
     <div
-      className="max-w-[200px] flex flex-col bg-white rounded-l-lg p-3 gap-4"
+      className="max-w-[200px] min-w-fit flex flex-col bg-white rounded-l-lg p-3 gap-4 shadowblack"
       style={{ height: "calc(100vh - 32px)" }}
     >
       <Logo />
       <button
         className={
           pageid === 1
-            ? "button-orange flex items-center gap-2"
+            ? "button-orange shadowblack flex items-center gap-2"
             : "button-orange-not-selected  text-gray flex items-center gap-2"
         }
       >
@@ -25,7 +25,7 @@ export default function Sidebar({ pageid }: sidebarProps) {
       <button
         className={
           pageid === 2
-            ? "button-orange flex items-center gap-2"
+            ? "button-orange shadowblack flex items-center gap-2"
             : "button-orange-not-selected  text-gray flex items-center gap-2"
         }
       >
@@ -34,7 +34,7 @@ export default function Sidebar({ pageid }: sidebarProps) {
       <button
         className={
           pageid === 3
-            ? "button-orange flex items-center gap-2"
+            ? "button-orange shadowblack flex items-center gap-2"
             : "button-orange-not-selected  text-gray flex items-center gap-2"
         }
       >
@@ -43,7 +43,7 @@ export default function Sidebar({ pageid }: sidebarProps) {
       <button
         className={
           pageid === 4
-            ? "button-orange flex items-center gap-2"
+            ? "button-orange shadowblack flex items-center gap-2"
             : "button-orange-not-selected  text-gray flex items-center gap-2"
         }
         onClick={() => logout()}
