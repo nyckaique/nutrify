@@ -2,6 +2,7 @@ import Container from "../../components/Container";
 import Pagetitle from "../../components/Pagetitle";
 import Sidebar from "../../components/Sidebar";
 import Userbar from "../../components/Userbar";
+import PacientesTable from "./components/PacientesTable";
 export function Home() {
   // const { } = useContext(Context)!;
   return (
@@ -10,6 +11,7 @@ export function Home() {
       <Container>
         <Userbar />
         <Pagetitle titulo="Pacientes" />
+        <PacientesTable />
       </Container>
     </div>
   );
