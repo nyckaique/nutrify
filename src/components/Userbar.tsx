@@ -7,7 +7,7 @@ export default function Userbar() {
       <img
         src={user?.avatarUrl ? user.avatarUrl : "src/assets/avatar.png"}
         alt=""
-        className="w-[74px] h-auto object-fill p-0"
+        className="w-[74px] h-auto object-cover p-0 rounded-[50%] aspect-square"
       />
       <p className="font-bold text-xl text-white">Bem vindo {user?.nome}!</p>
     </div>
