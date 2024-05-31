@@ -61,3 +61,16 @@
 .scrollable-table > table tr:nth-of-type(even) {
   background-color: rgba(53, 53, 53, 0.1);
 }
+
+.labelAvatar {
+  @apply flex justify-center items-center flex-col cursor-pointer;
+}
+.labelAvatar input {
+  @apply hidden;
+}
+.labelAvatar span {
+  @apply z-10 absolute opacity-0 transition-all;
+}
+.labelAvatar:hover span {
+  @apply scale-[2] opacity-100;
+}

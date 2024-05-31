@@ -20,6 +20,12 @@ interface ContextType {
   signin: (email: string, senha: string) => void;
   logout: () => void;
   loading: boolean;
+  storageUser: (data: {
+    uid: string;
+    nome: string;
+    email: string;
+    avatarUrl: string | null;
+  }) => void;
 }
 export interface user {
   uid: string;
@@ -120,6 +126,7 @@ export default function Provider({ children }: ProviderProps) {
         signin,
         logout,
         loading,
+        storageUser,
       }}
     >
       {children}
