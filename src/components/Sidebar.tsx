@@ -1,12 +1,27 @@
 import Logo from "./Logo";
 import { useContext } from "react";
 import { Context } from "../context";
+import { useNavigate } from "react-router-dom";
 interface sidebarProps {
   pageid: number;
 }
 export default function Sidebar({ pageid }: sidebarProps) {
   const { logout } = useContext(Context)!;
+  const navigate = useNavigate();
 
+  function handleNavigate(pagenumber: number) {
+    switch (pagenumber) {
+      case 1:
+        navigate("/home");
+        break;
+      case 2:
+        navigate("/novopaciente");
+        break;
+      case 3:
+        navigate("/conta");
+        break;
+    }
+  }
   return (
     <div
       className="max-w-[200px] min-w-fit flex flex-col bg-white rounded-l-lg p-3 gap-4 shadowblack"
@@ -19,6 +34,7 @@ export default function Sidebar({ pageid }: sidebarProps) {
             ? "button-orange shadowblack flex items-center gap-2"
             : "button-orange-not-selected  text-gray flex items-center gap-2"
         }
+        onClick={() => handleNavigate(1)}
       >
         <i className="fa fa-users" aria-hidden="true"></i>Pacientes
       </button>
@@ -28,6 +44,7 @@ export default function Sidebar({ pageid }: sidebarProps) {
             ? "button-orange shadowblack flex items-center gap-2"
             : "button-orange-not-selected  text-gray flex items-center gap-2"
         }
+        onClick={() => handleNavigate(2)}
       >
         <i className="fa fa-plus" aria-hidden="true"></i>Novo Paciente
       </button>
@@ -37,6 +54,7 @@ export default function Sidebar({ pageid }: sidebarProps) {
             ? "button-orange shadowblack flex items-center gap-2"
             : "button-orange-not-selected  text-gray flex items-center gap-2"
         }
+        onClick={() => handleNavigate(3)}
       >
         <i className="fa fa-cog" aria-hidden="true"></i>Conta
       </button>
