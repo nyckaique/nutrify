@@ -11,9 +11,27 @@ export function ContaConfig() {
   const [imagemAvatar, setImagemAvatar] = useState<File | null>(null);
 
   const [nome, setNome] = useState(user && user.nome);
+  const [errorShow, setErrorShow] = useState(false);
+  const [errorNome, setErrorNome] = useState("");
+  const nomeRegex = /^[A-Za-z]{3,}(?: [A-Za-z]{3,})*$/;
 
   async function formSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (!nomeRegex.test(nome!)) {
+      setErrorNome(
+        "Nome e/ou sobrenome inválido. Cada um deve ter pelo menos 3 letras."
+      );
+      setErrorShow(true);
+      e.preventDefault();
+      return;
+    } else if (nome!.length > 50) {
+      setErrorNome("Nome muito longo.");
+      setErrorShow(true);
+      e.preventDefault();
+      return;
+    }
+    setErrorShow(false);
+
     if (imagemAvatar === null && nome !== "") {
       const docRef = doc(db, "users", user!.uid);
       await updateDoc(docRef, {
@@ -123,6 +141,11 @@ export function ContaConfig() {
           value={nome!}
           onChange={(e) => setNome(e.target.value)}
         />
+        {errorShow ? (
+          <p className="text-orange text-sm font-bold">{errorNome}</p>
+        ) : (
+          <></>
+        )}
         <label>Novo e-mail</label>
         <input
           type="text"
