@@ -95,7 +95,7 @@ export function ContaConfig() {
   }
 
   return (
-    <div className="rounded-lg shadowblack p-3 flex flex-col items-center">
+    <div className="rounded-lg shadowblack p-3 flex flex-col items-center border-zinc-200 border-[1px]">
       <form
         method="POST"
         onSubmit={formSubmit}

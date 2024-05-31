@@ -1,4 +1,55 @@
+import { useContext, useState, useEffect } from "react";
+import { Context, pacienteResumo } from "../../../context";
+
 export default function PacientesTable() {
+  const { user, pacientes, loadPacientes, deletarPaciente } =
+    useContext(Context)!;
+  const [modalVisivel, setModalVisivel] = useState(false);
+  const [pacienteSelecionado, setPacienteSelecionado] =
+    useState<pacienteResumo | null>(null);
+
+  useEffect(() => {
+    loadPacientes(user!.uid);
+  }, []);
+  const [filtro, setFiltro] = useState("");
+
+  function formatarTelefone(num: string) {
+    const numero = num.replace(/\D/g, "");
+    if (numero.length === 10) {
+      return numero.replace(/(\d{2})(\d{4})(\d{4})/, "($1) $2-$3");
+    } else if (numero.length === 11) {
+      return numero.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
+    } else {
+      return "Número inválido";
+    }
+  }
+
+  const handleFiltroChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFiltro(event.target.value);
+  };
+
+  const pacientesFiltrados = filtro
+    ? pacientes!.filter((paciente) =>
+        paciente.nome.toLowerCase().includes(filtro.toLowerCase())
+      )
+    : pacientes;
+
+  function handleDeletarPaciente(paciente: pacienteResumo) {
+    setModalVisivel(true);
+    setPacienteSelecionado(paciente);
+  }
+  function handleConfirmarExclusao() {
+    if (pacienteSelecionado) {
+      deletarPaciente(pacienteSelecionado.id); // Função de exclusão do paciente
+      setModalVisivel(false);
+      setPacienteSelecionado(null);
+    }
+  }
+  function handleCancelarExclusao() {
+    setModalVisivel(false);
+    setPacienteSelecionado(null);
+  }
+
   return (
     <div className="overflow-hidden rounded-lg shadowblack">
       <div className="scrollable-table">
@@ -12,6 +63,8 @@ export default function PacientesTable() {
                     className="p-1 rounded-lg bg-white bg-opacity-30 placeholder:text-white max-w-[180px]  sticky top-0"
                     type="text"
                     placeholder="Buscar pelo nome..."
+                    value={filtro}
+                    onChange={handleFiltroChange}
                   />
                 </p>
               </th>
@@ -31,17 +84,17 @@ export default function PacientesTable() {
           </thead>
 
           <tbody>
-            {Array.from({ length: 20 }).map((_, index) => (
-              <tr key={index}>
-                <td className="p-2">Maria josé</td>
-                <td className="p-2 text-center">30/05/2024</td>
+            {pacientesFiltrados?.map((paciente: pacienteResumo) => (
+              <tr key={paciente.id}>
+                <td className="p-2">{paciente.nome}</td>
+                <td className="p-2 text-center">{paciente.ultimaConsulta}</td>
                 <td className="p-2 text-center">
                   <p className="hover:text-[var(--primary-orange)]">
                     <a
-                      href="https://api.whatsapp.com/send?phone=5564992673386"
+                      href={`https://api.whatsapp.com/send?phone=${paciente.telefone}`}
                       target="_blank"
                     >
-                      (64)91234-5678
+                      {formatarTelefone(paciente.telefone)}
                     </a>
                   </p>
                 </td>
@@ -51,7 +104,10 @@ export default function PacientesTable() {
                   </button>
                 </td>
                 <td className="p-2">
-                  <button className="hover:text-[var(--primary-orange)] w-full">
+                  <button
+                    onClick={() => handleDeletarPaciente(paciente)}
+                    className="hover:text-[var(--primary-orange)] w-full"
+                  >
                     <i className="fa fa-times" aria-hidden="true"></i>
                   </button>
                 </td>
@@ -60,6 +116,23 @@ export default function PacientesTable() {
           </tbody>
         </table>
       </div>
+      {modalVisivel && (
+        <div className="modal">
+          <div className="modal-content">
+            <h2 className="font-bold mb-2">Confirmar Exclusão</h2>
+            <p className="mb-2">
+              Tem certeza que deseja excluir{" "}
+              <span className="font-bold">{pacienteSelecionado?.nome}</span>?
+            </p>
+            <button className="button-orange" onClick={handleConfirmarExclusao}>
+              Confirmar
+            </button>
+            <button className="button-orange" onClick={handleCancelarExclusao}>
+              Cancelar
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -2,15 +2,15 @@ import Container from "../../components/Container";
 import Pagetitle from "../../components/Pagetitle";
 import Sidebar from "../../components/Sidebar";
 import Userbar from "../../components/Userbar";
-import PacientesTable from "./components/PacientesTable";
-export function Home() {
+import PacienteForm from "./components/PacienteForm";
+export function NovoPaciente() {
   return (
     <div className="min-h-screen p-4 bg-orange flex">
-      <Sidebar pageid={1} />
+      <Sidebar pageid={2} />
       <Container>
         <Userbar />
-        <Pagetitle titulo="Pacientes" />
-        <PacientesTable />
+        <Pagetitle titulo="Novo Paciente" />
+        <PacienteForm />
       </Container>
     </div>
   );
