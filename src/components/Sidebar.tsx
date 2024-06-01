@@ -60,9 +60,7 @@ export default function Sidebar({ pageid }: sidebarProps) {
       </button>
       <button
         className={
-          pageid === 4
-            ? "button-orange shadowblack flex items-center gap-2"
-            : "button-orange-not-selected  text-gray flex items-center gap-2"
+          "button-orange-not-selected  text-gray flex items-center gap-2"
         }
         onClick={() => logout()}
       >
