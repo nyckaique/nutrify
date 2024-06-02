@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { Login, Home, Conta, NovoPaciente } from "../pages";
+import { Login, Home, Conta, NovoPaciente, Paciente } from "../pages";
 import { Private } from "./Private";
 export function Rotas() {
   return (
@@ -26,6 +26,14 @@ export function Rotas() {
         element={
           <Private>
             <Conta />
+          </Private>
+        }
+      />
+      <Route
+        path="/paciente"
+        element={
+          <Private>
+            <Paciente />
           </Private>
         }
       />

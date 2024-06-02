@@ -4,9 +4,9 @@ import { useContext } from "react";
 import { Context } from "../../../context";
 
 const initialValuesPaciente = {
+  dataNascimento: null,
   name: "",
   telefone: "",
-  dataNascimento: new Date(),
   peso: 0,
   altura: 0,
   convenio: "",
@@ -43,7 +43,7 @@ const validationSchemaPaciente = Yup.object({
 interface FormPacienteValues {
   name: string;
   telefone: string;
-  dataNascimento: Date;
+  dataNascimento: Date | null;
   peso: number;
   altura: number;
   convenio: string;
@@ -52,16 +52,18 @@ interface FormPacienteValues {
 
 export default function PacienteForm() {
   const { cadastrarPaciente } = useContext(Context)!;
-  function handleLogin(values: FormPacienteValues) {
-    cadastrarPaciente(
-      values.name,
-      values.telefone,
-      values.dataNascimento,
-      values.peso,
-      values.altura,
-      values.convenio,
-      values.codigoConvenio
-    );
+  function handleNovoPaciente(values: FormPacienteValues) {
+    if (values.dataNascimento) {
+      cadastrarPaciente(
+        values.name,
+        values.telefone,
+        values.dataNascimento,
+        values.peso,
+        values.altura,
+        values.convenio,
+        values.codigoConvenio
+      );
+    }
   }
   return (
     <div className="overflow-hidden rounded-lg shadowblack border-zinc-200 border-[1px]">
@@ -69,7 +71,7 @@ export default function PacienteForm() {
         <Formik
           enableReinitialize
           initialValues={initialValuesPaciente}
-          onSubmit={handleLogin}
+          onSubmit={handleNovoPaciente}
           validationSchema={validationSchemaPaciente}
         >
           {() => (

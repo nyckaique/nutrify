@@ -14,6 +14,7 @@ import {
   onSnapshot,
   query,
   setDoc,
+  updateDoc,
   where,
 } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
@@ -48,12 +49,37 @@ interface ContextType {
   pacientes: pacienteResumo[] | undefined;
   loadPacientes: (uid: string) => Promise<void>;
   deletarPaciente: (id: string) => Promise<void>;
+  loadPaciente: (id: string) => Promise<void>;
+  paciente: paciente | undefined;
+  formatarTelefone: (num: string) => string;
+  novaConsulta: (
+    data: string,
+    peso: number,
+    notas: string,
+    indexHistorico?: number
+  ) => Promise<void>;
+  excluirConsulta: (indexHistorico: number) => Promise<void>;
 }
 export interface pacienteResumo {
   id: string;
   nome: string;
   ultimaConsulta: string;
   telefone: string;
+}
+export interface paciente {
+  id: string;
+  userId: string;
+  nome: string;
+  altura: number;
+  peso: number;
+  dataNascimento: string;
+  telefone: string;
+  convenio: string;
+  codigoConvenio: string;
+  exames: string[];
+  historico: [{ data: string; peso: number; notas: string }];
+  planos: string[];
+  receitas: string[];
 }
 export interface user {
   uid: string;
@@ -67,6 +93,7 @@ export default function Provider({ children }: ProviderProps) {
   const [user, setUser] = useState<user | null>();
   const [loading, setLoading] = useState(true);
   const [pacientes, setPacientes] = useState<pacienteResumo[]>();
+  const [paciente, setPaciente] = useState<paciente>();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -190,12 +217,12 @@ export default function Provider({ children }: ProviderProps) {
     const docsRef = collection(db, "pacientes");
     const q = query(docsRef, where("userId", "==", uid));
     onSnapshot(q, (snapshot) => {
+      console.log(snapshot);
       const lista: pacienteResumo[] = [];
       snapshot.forEach((doc) => {
         lista.push({
           id: doc.id,
           nome: doc.data().nomePaciente,
-
           ultimaConsulta: doc.data().historico ? "1" : "0",
           telefone: doc.data().telefone,
         });
@@ -216,6 +243,90 @@ export default function Provider({ children }: ProviderProps) {
       });
   }
 
+  async function loadPaciente(id: string) {
+    const docRef = doc(db, "pacientes", id);
+    onSnapshot(docRef, (snapshot) => {
+      if (snapshot.exists()) {
+        console.log(snapshot);
+        const paciente: paciente = {
+          id: id,
+          userId: snapshot.data().userId,
+          nome: snapshot.data().nomePaciente,
+          altura: snapshot.data().altura,
+          peso: snapshot.data().peso,
+          dataNascimento: snapshot.data().dataNascimento,
+          telefone: snapshot.data().telefone,
+          convenio: snapshot.data().convenio,
+          codigoConvenio: snapshot.data().codigoConvenio,
+          exames: snapshot.data().exames,
+          historico: snapshot.data().historico,
+          planos: snapshot.data().planos,
+          receitas: snapshot.data().receitas,
+        };
+        setPaciente(paciente);
+      }
+    });
+  }
+  function formatarTelefone(num: string): string {
+    const numero = num.replace(/\D/g, "");
+    if (numero.length === 10) {
+      return numero.replace(/(\d{2})(\d{4})(\d{4})/, "($1) $2-$3");
+    } else if (numero.length === 11) {
+      return numero.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
+    } else {
+      return "Número inválido";
+    }
+  }
+  async function novaConsulta(
+    data: string,
+    peso: number,
+    notas: string,
+    indexHistorico?: number
+  ) {
+    const docRef = doc(db, "pacientes", paciente!.id);
+    if (indexHistorico !== undefined && indexHistorico >= 0) {
+      const novoHistorico = [...paciente!.historico];
+      novoHistorico[indexHistorico] = { data, peso, notas };
+
+      await updateDoc(docRef, {
+        ...paciente,
+        historico: novoHistorico,
+      })
+        .then(() => {
+          toast.success("Consulta atualizada com sucesso");
+        })
+        .catch(() => {
+          toast.error("Não foi possível concluir a operação no momento");
+        });
+    } else {
+      await updateDoc(docRef, {
+        ...paciente,
+        historico: [...paciente!.historico, { data, peso, notas }],
+      })
+        .then(() => {
+          toast.success("Consulta adicionada com sucesso");
+        })
+        .catch(() => {
+          toast.error("Não foi possível concluir a operação no momento");
+        });
+    }
+  }
+  async function excluirConsulta(indexHistorico: number) {
+    const docRef = doc(db, "pacientes", paciente!.id);
+    const novoHistorico = paciente!.historico.filter(
+      (_, index) => index !== indexHistorico
+    );
+    try {
+      await updateDoc(docRef, {
+        ...paciente,
+        historico: novoHistorico,
+      });
+      toast.success("Consulta excluída com sucesso");
+    } catch (error) {
+      toast.error("Não foi possível concluir a operação no momento");
+    }
+  }
+
   return (
     <Context.Provider
       value={{
@@ -231,6 +342,11 @@ export default function Provider({ children }: ProviderProps) {
         pacientes,
         loadPacientes,
         deletarPaciente,
+        loadPaciente,
+        paciente,
+        formatarTelefone,
+        novaConsulta,
+        excluirConsulta,
       }}
     >
       {children}

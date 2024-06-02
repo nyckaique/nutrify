@@ -1,28 +1,18 @@
 import { useContext, useState, useEffect } from "react";
 import { Context, pacienteResumo } from "../../../context";
+import { useNavigate } from "react-router-dom";
 
 export default function PacientesTable() {
-  const { user, pacientes, loadPacientes, deletarPaciente } =
+  const { user, pacientes, loadPacientes, deletarPaciente, formatarTelefone } =
     useContext(Context)!;
   const [modalVisivel, setModalVisivel] = useState(false);
   const [pacienteSelecionado, setPacienteSelecionado] =
     useState<pacienteResumo | null>(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     loadPacientes(user!.uid);
   }, []);
   const [filtro, setFiltro] = useState("");
-
-  function formatarTelefone(num: string) {
-    const numero = num.replace(/\D/g, "");
-    if (numero.length === 10) {
-      return numero.replace(/(\d{2})(\d{4})(\d{4})/, "($1) $2-$3");
-    } else if (numero.length === 11) {
-      return numero.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
-    } else {
-      return "Número inválido";
-    }
-  }
 
   const handleFiltroChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFiltro(event.target.value);
@@ -48,6 +38,9 @@ export default function PacientesTable() {
   function handleCancelarExclusao() {
     setModalVisivel(false);
     setPacienteSelecionado(null);
+  }
+  function handleVisualizarPaciente(id: string) {
+    navigate("/paciente", { state: { id } });
   }
 
   return (
@@ -99,7 +92,10 @@ export default function PacientesTable() {
                   </p>
                 </td>
                 <td className="p-2">
-                  <button className="hover:text-[var(--primary-orange)] w-full">
+                  <button
+                    onClick={() => handleVisualizarPaciente(paciente.id)}
+                    className="hover:text-[var(--primary-orange)] w-full"
+                  >
                     <i className="fa fa-eye" aria-hidden="true"></i>
                   </button>
                 </td>
