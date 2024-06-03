@@ -59,6 +59,15 @@ interface ContextType {
     indexHistorico?: number
   ) => Promise<void>;
   excluirConsulta: (indexHistorico: number) => Promise<void>;
+  atualizarPaciente: (
+    name: string,
+    telefone: string,
+    dataNascimento: string,
+    peso: number,
+    altura: number,
+    convenio: string,
+    codigoConvenio?: string
+  ) => Promise<void>;
 }
 export interface pacienteResumo {
   id: string;
@@ -326,6 +335,34 @@ export default function Provider({ children }: ProviderProps) {
       toast.error("Não foi possível concluir a operação no momento");
     }
   }
+  async function atualizarPaciente(
+    name: string,
+    telefone: string,
+    dataNascimento: string,
+    peso: number,
+    altura: number,
+    convenio: string,
+    codigoConvenio: string = ""
+  ) {
+    const docRef = doc(db, "pacientes", paciente!.id);
+
+    await updateDoc(docRef, {
+      ...paciente,
+      nomePaciente: name,
+      telefone: telefone,
+      dataNascimento: dataNascimento,
+      peso: peso,
+      altura: altura,
+      convenio: convenio,
+      codigoConvenio: codigoConvenio,
+    })
+      .then(() => {
+        toast.success("Paciente com sucesso");
+      })
+      .catch(() => {
+        toast.error("Não foi possível atualizar os dados do paciente");
+      });
+  }
 
   return (
     <Context.Provider
@@ -347,6 +384,7 @@ export default function Provider({ children }: ProviderProps) {
         formatarTelefone,
         novaConsulta,
         excluirConsulta,
+        atualizarPaciente,
       }}
     >
       {children}
