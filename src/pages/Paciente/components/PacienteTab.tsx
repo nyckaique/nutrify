@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { paciente } from "../../../context";
 import PacienteHistorico from "./PacienteHistorico";
+import PacientePlano from "./PacientePlano";
+import PacienteReceitasMedicas from "./PacienteReceitasMedicas";
+import PacienteExames from "./PacienteExames";
 interface PacienteInfoProps {
   p: paciente;
 }
@@ -53,9 +56,9 @@ export default function PacienteTab({ p }: PacienteInfoProps) {
         </button>
       </div>
       {tabid === 1 ? <PacienteHistorico p={p} /> : ""}
-      {tabid === 2 ? <p>planos Alimentares</p> : ""}
-      {tabid === 3 ? <p>receitas medicas</p> : ""}
-      {tabid === 4 ? <p>exames</p> : ""}
+      {tabid === 2 ? <PacientePlano p={p} /> : ""}
+      {tabid === 3 ? <PacienteReceitasMedicas p={p} /> : ""}
+      {tabid === 4 ? <PacienteExames p={p} /> : ""}
     </div>
   );
 }

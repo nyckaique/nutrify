@@ -4,7 +4,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { createContext, useState, useEffect, ReactNode } from "react";
-import { auth, db } from "../firebase/firebaseConnection";
+import { auth, db, storage } from "../firebase/firebaseConnection";
 import {
   addDoc,
   collection,
@@ -19,6 +19,7 @@ import {
 } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { deleteObject, ref } from "firebase/storage";
 
 interface ProviderProps {
   children: ReactNode;
@@ -68,6 +69,7 @@ interface ContextType {
     convenio: string,
     codigoConvenio?: string
   ) => Promise<void>;
+  excluirPlano: (indexPlano: number, filePath: string) => Promise<void>;
 }
 export interface pacienteResumo {
   id: string;
@@ -85,10 +87,10 @@ export interface paciente {
   telefone: string;
   convenio: string;
   codigoConvenio: string;
-  exames: string[];
+  exames: [{ data: string; fileName: string; urlFile: string }];
   historico: [{ data: string; peso: number; notas: string }];
-  planos: string[];
-  receitas: string[];
+  planos: [{ data: string; fileName: string; urlFile: string }];
+  receitas: [{ data: string; fileName: string; urlFile: string }];
 }
 export interface user {
   uid: string;
@@ -363,6 +365,23 @@ export default function Provider({ children }: ProviderProps) {
         toast.error("Não foi possível atualizar os dados do paciente");
       });
   }
+  async function excluirPlano(indexPlano: number, filePath: string) {
+    const docRef = doc(db, "pacientes", paciente!.id);
+    const fileRef = ref(storage, filePath);
+    const novoPlano = paciente!.planos.filter(
+      (_, index) => index !== indexPlano
+    );
+    try {
+      await updateDoc(docRef, {
+        ...paciente,
+        planos: novoPlano,
+      });
+      await deleteObject(fileRef);
+      toast.success("Plano excluído com sucesso");
+    } catch (error) {
+      toast.error("Não foi possível concluir a operação no momento");
+    }
+  }
 
   return (
     <Context.Provider
@@ -385,6 +404,7 @@ export default function Provider({ children }: ProviderProps) {
         novaConsulta,
         excluirConsulta,
         atualizarPaciente,
+        excluirPlano,
       }}
     >
       {children}

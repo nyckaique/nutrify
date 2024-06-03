@@ -101,3 +101,6 @@
 .modal-content button {
   margin: 5px;
 }
+.button-input-file::file-selector-button {
+  @apply px-4 py-2 bg-[var(--primary-orange)] min-w-fit rounded-md text-white hover:bg-orange-700 cursor-pointer transition-all border-none;
+}
