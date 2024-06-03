@@ -128,7 +128,7 @@ export default function PacienteReceitasMedicas({ p }: PacienteInfoProps) {
         <div className="modal">
           <div className="modal-content w-[400px]">
             <h2 className="font-bold mb-2">Adicionar nova receita médica</h2>
-            <form method="POST" onSubmit={formSubmit}>
+            <form method="post" onSubmit={formSubmit}>
               <input
                 className="button-input-file mb-4"
                 type="file"
