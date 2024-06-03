@@ -10,7 +10,7 @@ export default function PacienteTab({ p }: PacienteInfoProps) {
   const [tabid, setTabid] = useState(1);
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full overflow-hidden">
       <div className="w-full flex gap-2 pb-4 border-b-2">
         <button
           className={

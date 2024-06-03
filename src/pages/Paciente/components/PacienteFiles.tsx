@@ -134,37 +134,37 @@ export default function PacienteFiles({ p, path }: PacienteInfoProps) {
 
   return (
     <div>
-      <div className="pt-4 h-full flex-1 overflow-hidden flex flex-col gap-3 ">
+      <div className="pt-4 h-full flex-1 overflow-y-auto flex flex-col gap-3 ">
         <button
           className="ml-4 button-orange shadowblack w-fit"
           onClick={() => setModalVisivel(true)}
         >
           {texto}
         </button>
-        <div className="h-[190px]">
-          <div className="flex flex-col gap-3 py-3 scrollable-form">
-            {filesOrdenadas.length > 0 &&
-              filesOrdenadas.map((exame, indexFiles) => (
-                <div key={indexFiles}>
-                  <button
-                    onClick={() => handleExcluirFile(exame.originalIndex)}
-                    className="mr-4 hover:text-[var(--primary-orange)] w-[30px]"
-                  >
-                    <i className="fa fa-times" aria-hidden="true"></i>
-                  </button>
-                  <a
-                    className="hover:text-[var(--primary-orange)]"
-                    href={exame.urlFile}
-                    target="_blank"
-                  >
-                    {exame.fileName}
-                  </a>{" "}
-                  - {formatarData(exame.data)}
-                </div>
-              ))}
-          </div>
+
+        <div className="flex flex-col gap-3 py-3 h-full">
+          {filesOrdenadas.length > 0 &&
+            filesOrdenadas.map((exame, indexFiles) => (
+              <div key={indexFiles}>
+                <button
+                  onClick={() => handleExcluirFile(exame.originalIndex)}
+                  className="mr-4 hover:text-[var(--primary-orange)] w-[30px]"
+                >
+                  <i className="fa fa-times" aria-hidden="true"></i>
+                </button>
+                <a
+                  className="hover:text-[var(--primary-orange)]"
+                  href={exame.urlFile}
+                  target="_blank"
+                >
+                  {exame.fileName}
+                </a>{" "}
+                - {formatarData(exame.data)}
+              </div>
+            ))}
         </div>
       </div>
+
       {modalVisivel && (
         <div className="modal">
           <div className="modal-content w-[400px]">
