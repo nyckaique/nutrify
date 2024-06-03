@@ -25,7 +25,6 @@ interface FormProps {
 export default function LoginForm({ setIsLogando }: FormProps) {
   const { signin } = useContext(Context)!;
   function handleLogin(values: FormLoginValues) {
-    console.log("login: ", values);
     signin(values.email, values.password);
   }
   return (

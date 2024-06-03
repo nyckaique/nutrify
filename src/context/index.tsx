@@ -139,8 +139,7 @@ export default function Provider({ children }: ProviderProps) {
           navigate("/home");
         });
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
         toast.error("Cadastro deu erro");
       });
   }
@@ -163,8 +162,7 @@ export default function Provider({ children }: ProviderProps) {
         toast.success("Login feio com sucesso");
         navigate("/home");
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
         toast.error("Login deu erro");
       });
   }
@@ -228,7 +226,6 @@ export default function Provider({ children }: ProviderProps) {
     const docsRef = collection(db, "pacientes");
     const q = query(docsRef, where("userId", "==", uid));
     onSnapshot(q, (snapshot) => {
-      console.log(snapshot);
       const lista: pacienteResumo[] = [];
       snapshot.forEach((doc) => {
         lista.push({
@@ -258,7 +255,6 @@ export default function Provider({ children }: ProviderProps) {
     const docRef = doc(db, "pacientes", id);
     onSnapshot(docRef, (snapshot) => {
       if (snapshot.exists()) {
-        console.log(snapshot);
         const paciente: paciente = {
           id: id,
           userId: snapshot.data().userId,

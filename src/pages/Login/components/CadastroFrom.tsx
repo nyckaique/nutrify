@@ -34,7 +34,6 @@ interface FormProps {
 export default function CadastroFrom({ setIsLogando }: FormProps) {
   const { signup } = useContext(Context)!;
   function handleCadastro(values: FormCadastroValues) {
-    console.log("cadastro: ", values);
     signup(values.name, values.email, values.password);
   }
   return (
