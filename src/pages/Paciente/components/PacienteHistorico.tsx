@@ -1,10 +1,10 @@
 import { useContext, useState } from "react";
-import { Context, paciente } from "../../../context";
+import { Context, Paciente } from "../../../context";
 import { parseISO, format, compareDesc } from "date-fns";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 interface PacienteInfoProps {
-  p: paciente;
+  p: Paciente;
 }
 
 export default function PacienteHistorico({ p }: PacienteInfoProps) {
@@ -114,15 +114,15 @@ export default function PacienteHistorico({ p }: PacienteInfoProps) {
     setModalDeleteVisivel(false);
   }
   return (
-    <div className="p-3 shadowblack rounded-lg my-3 border-zinc-200 border-[1px] flex-1 overflow-hidden flex flex-col gap-3 ">
+    <div className="pt-4 h-full flex-1 overflow-hidden flex flex-col gap-3 ">
       <button
-        className="button-orange shadowblack w-fit"
+        className="ml-4 button-orange shadowblack w-fit"
         onClick={() => setModalVisivel(true)}
       >
         Nova Consulta
       </button>
-      <div className="h-[150px]">
-        <div className="flex flex-col gap-3 scrollable-form">
+      <div className=" h-[190px]">
+        <div className="flex flex-col gap-3 py-3 scrollable-form">
           {historicoOrdenado.length > 0 &&
             historicoOrdenado.map((consulta, index) => (
               <p key={index}>

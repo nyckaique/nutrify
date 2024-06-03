@@ -26,8 +26,8 @@ interface ProviderProps {
 }
 interface ContextType {
   signed: boolean;
-  user: user | undefined | null;
-  setUser: (user: user) => void;
+  user: User | undefined | null;
+  setUser: (user: User) => void;
   signup: (nome: string, email: string, senha: string) => Promise<void>;
   signin: (email: string, senha: string) => Promise<void>;
   logout: () => Promise<void>;
@@ -47,11 +47,11 @@ interface ContextType {
     convenio: string,
     codigoConvenio?: string
   ) => Promise<void>;
-  pacientes: pacienteResumo[] | undefined;
+  pacientes: PacienteResumo[] | undefined;
   loadPacientes: (uid: string) => Promise<void>;
   deletarPaciente: (id: string) => Promise<void>;
   loadPaciente: (id: string) => Promise<void>;
-  paciente: paciente | undefined;
+  paciente: Paciente | undefined;
   formatarTelefone: (num: string) => string;
   novaConsulta: (
     data: string,
@@ -71,13 +71,13 @@ interface ContextType {
   ) => Promise<void>;
   excluirPlano: (indexPlano: number, filePath: string) => Promise<void>;
 }
-export interface pacienteResumo {
+export interface PacienteResumo {
   id: string;
   nome: string;
   ultimaConsulta: string;
   telefone: string;
 }
-export interface paciente {
+export interface Paciente {
   id: string;
   userId: string;
   nome: string;
@@ -87,12 +87,12 @@ export interface paciente {
   telefone: string;
   convenio: string;
   codigoConvenio: string;
-  exames: [{ data: string; fileName: string; urlFile: string }];
+  exames: [{ data: string; fileName: string; urlFile: string; id: string }];
   historico: [{ data: string; peso: number; notas: string }];
-  planos: [{ data: string; fileName: string; urlFile: string }];
-  receitas: [{ data: string; fileName: string; urlFile: string }];
+  planos: [{ data: string; fileName: string; urlFile: string; id: string }];
+  receitas: [{ data: string; fileName: string; urlFile: string; id: string }];
 }
-export interface user {
+export interface User {
   uid: string;
   nome: string;
   email: string;
@@ -101,10 +101,10 @@ export interface user {
 
 export const Context = createContext<ContextType | undefined>(undefined);
 export default function Provider({ children }: ProviderProps) {
-  const [user, setUser] = useState<user | null>();
+  const [user, setUser] = useState<User | null>();
   const [loading, setLoading] = useState(true);
-  const [pacientes, setPacientes] = useState<pacienteResumo[]>();
-  const [paciente, setPaciente] = useState<paciente>();
+  const [pacientes, setPacientes] = useState<PacienteResumo[]>();
+  const [paciente, setPaciente] = useState<Paciente>();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -212,7 +212,7 @@ export default function Provider({ children }: ProviderProps) {
         toast.error("Não foi possível realizar o cadastro no momento");
       });
   }
-  function ordenar(a: pacienteResumo, b: pacienteResumo) {
+  function ordenar(a: PacienteResumo, b: PacienteResumo) {
     if (a.nome < b.nome) {
       return -1;
     }
@@ -226,7 +226,7 @@ export default function Provider({ children }: ProviderProps) {
     const docsRef = collection(db, "pacientes");
     const q = query(docsRef, where("userId", "==", uid));
     onSnapshot(q, (snapshot) => {
-      const lista: pacienteResumo[] = [];
+      const lista: PacienteResumo[] = [];
       snapshot.forEach((doc) => {
         lista.push({
           id: doc.id,
@@ -255,7 +255,7 @@ export default function Provider({ children }: ProviderProps) {
     const docRef = doc(db, "pacientes", id);
     onSnapshot(docRef, (snapshot) => {
       if (snapshot.exists()) {
-        const paciente: paciente = {
+        const paciente: Paciente = {
           id: id,
           userId: snapshot.data().userId,
           nome: snapshot.data().nomePaciente,
@@ -274,6 +274,7 @@ export default function Provider({ children }: ProviderProps) {
       }
     });
   }
+
   function formatarTelefone(num: string): string {
     const numero = num.replace(/\D/g, "");
     if (numero.length === 10) {
@@ -284,6 +285,7 @@ export default function Provider({ children }: ProviderProps) {
       return "Número inválido";
     }
   }
+
   async function novaConsulta(
     data: string,
     peso: number,
@@ -318,6 +320,7 @@ export default function Provider({ children }: ProviderProps) {
         });
     }
   }
+
   async function excluirConsulta(indexHistorico: number) {
     const docRef = doc(db, "pacientes", paciente!.id);
     const novoHistorico = paciente!.historico.filter(
@@ -333,6 +336,7 @@ export default function Provider({ children }: ProviderProps) {
       toast.error("Não foi possível concluir a operação no momento");
     }
   }
+
   async function atualizarPaciente(
     name: string,
     telefone: string,
@@ -343,7 +347,6 @@ export default function Provider({ children }: ProviderProps) {
     codigoConvenio: string = ""
   ) {
     const docRef = doc(db, "pacientes", paciente!.id);
-
     await updateDoc(docRef, {
       ...paciente,
       nomePaciente: name,
@@ -361,6 +364,7 @@ export default function Provider({ children }: ProviderProps) {
         toast.error("Não foi possível atualizar os dados do paciente");
       });
   }
+
   async function excluirPlano(indexPlano: number, filePath: string) {
     const docRef = doc(db, "pacientes", paciente!.id);
     const fileRef = ref(storage, filePath);

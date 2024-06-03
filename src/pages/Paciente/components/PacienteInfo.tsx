@@ -1,8 +1,8 @@
 import { useContext, useState } from "react";
-import { Context, paciente } from "../../../context";
+import { Context, Paciente } from "../../../context";
 import { parseISO, differenceInYears, isBefore, subYears } from "date-fns";
 interface PacienteInfoProps {
-  p: paciente;
+  p: Paciente;
 }
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";

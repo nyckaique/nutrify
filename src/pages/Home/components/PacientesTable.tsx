@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from "react";
-import { Context, pacienteResumo } from "../../../context";
+import { Context, PacienteResumo } from "../../../context";
 import { useNavigate } from "react-router-dom";
 
 export default function PacientesTable() {
@@ -7,7 +7,7 @@ export default function PacientesTable() {
     useContext(Context)!;
   const [modalVisivel, setModalVisivel] = useState(false);
   const [pacienteSelecionado, setPacienteSelecionado] =
-    useState<pacienteResumo | null>(null);
+    useState<PacienteResumo | null>(null);
   const navigate = useNavigate();
   useEffect(() => {
     loadPacientes(user!.uid);
@@ -24,7 +24,7 @@ export default function PacientesTable() {
       )
     : pacientes;
 
-  function handleDeletarPaciente(paciente: pacienteResumo) {
+  function handleDeletarPaciente(paciente: PacienteResumo) {
     setModalVisivel(true);
     setPacienteSelecionado(paciente);
   }
@@ -77,7 +77,7 @@ export default function PacientesTable() {
           </thead>
 
           <tbody>
-            {pacientesFiltrados?.map((paciente: pacienteResumo) => (
+            {pacientesFiltrados?.map((paciente: PacienteResumo) => (
               <tr key={paciente.id}>
                 <td className="p-2">{paciente.nome}</td>
                 <td className="p-2 text-center">{paciente.ultimaConsulta}</td>

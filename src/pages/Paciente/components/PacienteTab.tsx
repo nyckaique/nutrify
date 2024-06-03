@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { paciente } from "../../../context";
+import { Paciente } from "../../../context";
 import PacienteHistorico from "./PacienteHistorico";
-import PacientePlano from "./PacientePlano";
-import PacienteReceitasMedicas from "./PacienteReceitasMedicas";
-import PacienteExames from "./PacienteExames";
+import PacienteFiles from "./PacienteFiles";
 interface PacienteInfoProps {
-  p: paciente;
+  p: Paciente;
 }
 
 export default function PacienteTab({ p }: PacienteInfoProps) {
@@ -13,7 +11,7 @@ export default function PacienteTab({ p }: PacienteInfoProps) {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="w-full flex gap-2">
+      <div className="w-full flex gap-2 pb-4 border-b-2">
         <button
           className={
             tabid === 1
@@ -56,9 +54,9 @@ export default function PacienteTab({ p }: PacienteInfoProps) {
         </button>
       </div>
       {tabid === 1 ? <PacienteHistorico p={p} /> : ""}
-      {tabid === 2 ? <PacientePlano p={p} /> : ""}
-      {tabid === 3 ? <PacienteReceitasMedicas p={p} /> : ""}
-      {tabid === 4 ? <PacienteExames p={p} /> : ""}
+      {tabid === 2 ? <PacienteFiles p={p} path="planos" /> : ""}
+      {tabid === 3 ? <PacienteFiles p={p} path="receitas" /> : ""}
+      {tabid === 4 ? <PacienteFiles p={p} path="exames" /> : ""}
     </div>
   );
 }
