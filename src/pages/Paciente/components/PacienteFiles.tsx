@@ -19,7 +19,7 @@ export default function PacienteFiles({ p, path }: PacienteInfoProps) {
   const [indexFile, setIndexFile] = useState<number | null>();
   const [id, setId] = useState<string>();
   const [texto, setTexto] = useState<string>("");
-  const { paciente, excluirPlano } = useContext(Context)!;
+  const { paciente, excluirPlano, darkMode } = useContext(Context)!;
 
   interface FileAtual {
     data: string;
@@ -167,7 +167,13 @@ export default function PacienteFiles({ p, path }: PacienteInfoProps) {
 
       {modalVisivel && (
         <div className="modal">
-          <div className="modal-content w-[400px] max-w-[80%] overflow-x-auto">
+          <div
+            className={`modal-content w-[400px] max-w-[80%] overflow-x-auto ${
+              darkMode
+                ? "bg-[var(--primary-grey)] text-white"
+                : "bg-white text-[var(--primary-grey)]"
+            }`}
+          >
             <h2 className="font-bold mb-2 text-xl">{texto}</h2>
             <form method="post" onSubmit={formSubmit}>
               <input

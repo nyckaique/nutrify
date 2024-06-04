@@ -3,8 +3,14 @@ import { Context, PacienteResumo } from "../../../context";
 import { useNavigate } from "react-router-dom";
 
 export default function PacientesTable() {
-  const { user, pacientes, loadPacientes, deletarPaciente, formatarTelefone } =
-    useContext(Context)!;
+  const {
+    user,
+    pacientes,
+    loadPacientes,
+    deletarPaciente,
+    formatarTelefone,
+    darkMode,
+  } = useContext(Context)!;
   const [modalVisivel, setModalVisivel] = useState(false);
   const [pacienteSelecionado, setPacienteSelecionado] =
     useState<PacienteResumo | null>(null);
@@ -46,7 +52,7 @@ export default function PacientesTable() {
   return (
     <div className="overflow-hidden rounded-lg shadowblack w-full max-w-[1200px] mx-auto">
       <div className="scrollable-table">
-        <table className="bg-white ">
+        <table>
           <thead>
             <tr className="bg-[var(--primary-orange)]">
               <th className="p-2 sticky top-0 bg-[var(--primary-orange)]">
@@ -114,7 +120,13 @@ export default function PacientesTable() {
       </div>
       {modalVisivel && (
         <div className="modal">
-          <div className="modal-content">
+          <div
+            className={`modal-content ${
+              darkMode
+                ? "bg-[var(--primary-grey)] text-white"
+                : "bg-white text-[var(--primary-grey)]"
+            }`}
+          >
             <h2 className="font-bold mb-2">Confirmar Exclusão</h2>
             <p className="mb-2">
               Tem certeza que deseja excluir{" "}

@@ -8,7 +8,8 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
 export default function PacienteInfo({ p }: PacienteInfoProps) {
-  const { formatarTelefone, atualizarPaciente } = useContext(Context)!;
+  const { formatarTelefone, atualizarPaciente, darkMode } =
+    useContext(Context)!;
   const [modalVisivel, setModalVisivel] = useState(false);
   function calcularIdade(dataNascimento: string): number {
     const hoje = new Date();
@@ -141,7 +142,13 @@ export default function PacienteInfo({ p }: PacienteInfoProps) {
       </div>
       {modalVisivel && (
         <div className="modal ">
-          <div className="modal-content w-[400px] overflow-y-auto max-h-[90%]">
+          <div
+            className={`modal-content w-[400px] max-w-[80%] overflow-y-auto max-h-[90%] ${
+              darkMode
+                ? "bg-[var(--primary-grey)] text-white"
+                : "bg-white text-[var(--primary-grey)]"
+            }`}
+          >
             <Formik
               enableReinitialize
               initialValues={initialValuesPaciente}
@@ -156,7 +163,11 @@ export default function PacienteInfo({ p }: PacienteInfoProps) {
                     name="name"
                     type="text"
                     placeholder="Nome do paciente"
-                    className="input-light-text-color p-2 rounded-md border-zinc-200 border-2"
+                    className={`${
+                      darkMode
+                        ? "border-zinc-700 bg-[var(--primary-grey)] text-white"
+                        : "border-zinc-200 bg-white text-[var(--primary-grey)]"
+                    } w-full p-2 rounded-md  border-2`}
                   />
                   <p className="text-orange text-sm font-bold">
                     <ErrorMessage name="name" />
@@ -167,7 +178,11 @@ export default function PacienteInfo({ p }: PacienteInfoProps) {
                     name="telefone"
                     type="text"
                     placeholder="64912345678"
-                    className="input-light-text-color p-2 rounded-md border-zinc-200 border-2"
+                    className={`${
+                      darkMode
+                        ? "border-zinc-700 bg-[var(--primary-grey)] text-white"
+                        : "border-zinc-200 bg-white text-[var(--primary-grey)]"
+                    } w-full p-2 rounded-md  border-2`}
                   />
                   <p className="text-orange text-sm font-bold">
                     <ErrorMessage name="telefone" />
@@ -178,7 +193,11 @@ export default function PacienteInfo({ p }: PacienteInfoProps) {
                     name="dataNascimento"
                     type="date"
                     placeholder=""
-                    className="input-light-text-color p-2 rounded-md border-zinc-200 border-2"
+                    className={`${
+                      darkMode
+                        ? "border-zinc-700 bg-[var(--primary-grey)] text-white"
+                        : "border-zinc-200 bg-white text-[var(--primary-grey)]"
+                    } w-full p-2 rounded-md  border-2`}
                   />
                   <p className="text-orange text-sm font-bold">
                     <ErrorMessage name="dataNascimento" />
@@ -188,7 +207,11 @@ export default function PacienteInfo({ p }: PacienteInfoProps) {
                   <Field
                     name="peso"
                     type="number"
-                    className="input-light-text-color p-2 rounded-md border-zinc-200 border-2"
+                    className={`${
+                      darkMode
+                        ? "border-zinc-700 bg-[var(--primary-grey)] text-white"
+                        : "border-zinc-200 bg-white text-[var(--primary-grey)]"
+                    } w-full p-2 rounded-md  border-2`}
                   />
                   <p className="text-orange text-sm font-bold">
                     <ErrorMessage name="peso" />
@@ -198,7 +221,11 @@ export default function PacienteInfo({ p }: PacienteInfoProps) {
                   <Field
                     name="altura"
                     type="number"
-                    className="input-light-text-color p-2 rounded-md border-zinc-200 border-2"
+                    className={`${
+                      darkMode
+                        ? "border-zinc-700 bg-[var(--primary-grey)] text-white"
+                        : "border-zinc-200 bg-white text-[var(--primary-grey)]"
+                    } w-full p-2 rounded-md  border-2`}
                   />
                   <p className="text-orange text-sm font-bold">
                     <ErrorMessage name="altura" />
@@ -209,7 +236,11 @@ export default function PacienteInfo({ p }: PacienteInfoProps) {
                     name="convenio"
                     type="text"
                     placeholder="Empresa de convênio"
-                    className="input-light-text-color p-2 rounded-md border-zinc-200 border-2"
+                    className={`${
+                      darkMode
+                        ? "border-zinc-700 bg-[var(--primary-grey)] text-white"
+                        : "border-zinc-200 bg-white text-[var(--primary-grey)]"
+                    } w-full p-2 rounded-md  border-2`}
                   />
                   <p className="text-orange text-sm font-bold">
                     <ErrorMessage name="convenio" />
@@ -220,7 +251,11 @@ export default function PacienteInfo({ p }: PacienteInfoProps) {
                     name="codigoConvenio"
                     type="text"
                     placeholder="Código do convênio"
-                    className="input-light-text-color p-2 rounded-md border-zinc-200 border-2"
+                    className={`${
+                      darkMode
+                        ? "border-zinc-700 bg-[var(--primary-grey)] text-white"
+                        : "border-zinc-200 bg-white text-[var(--primary-grey)]"
+                    } w-full p-2 rounded-md  border-2`}
                   />
                   <p className="text-orange text-sm font-bold">
                     <ErrorMessage name="codigoConvenio" />

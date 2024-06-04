@@ -51,7 +51,7 @@ interface FormPacienteValues {
 }
 
 export default function PacienteForm() {
-  const { cadastrarPaciente } = useContext(Context)!;
+  const { cadastrarPaciente, darkMode } = useContext(Context)!;
   function handleNovoPaciente(values: FormPacienteValues) {
     if (values.dataNascimento) {
       cadastrarPaciente(
@@ -66,7 +66,11 @@ export default function PacienteForm() {
     }
   }
   return (
-    <div className="overflow-hidden rounded-lg shadowblack border-zinc-200 border-[1px]">
+    <div
+      className={`${
+        darkMode ? "border-zinc-700" : "border-zinc-200"
+      } overflow-hidden rounded-lg shadowblack  border-[1px]`}
+    >
       <div className="p-3 flex flex-col items-center scrollable-form">
         <Formik
           enableReinitialize
@@ -82,7 +86,11 @@ export default function PacienteForm() {
                 name="name"
                 type="text"
                 placeholder="Nome do paciente"
-                className="input-light-text-color p-2 rounded-md border-zinc-200 border-2"
+                className={`${
+                  darkMode
+                    ? "border-zinc-700 bg-[var(--primary-grey)] text-white"
+                    : "border-zinc-200 bg-white text-[var(--primary-grey)]"
+                } w-full p-2 rounded-md  border-2`}
               />
               <p className="text-orange text-sm font-bold">
                 <ErrorMessage name="name" />
@@ -93,7 +101,11 @@ export default function PacienteForm() {
                 name="telefone"
                 type="text"
                 placeholder="64912345678"
-                className="input-light-text-color p-2 rounded-md border-zinc-200 border-2"
+                className={`${
+                  darkMode
+                    ? "border-zinc-700 bg-[var(--primary-grey)] text-white"
+                    : "border-zinc-200 bg-white text-[var(--primary-grey)]"
+                } w-full p-2 rounded-md  border-2`}
               />
               <p className="text-orange text-sm font-bold">
                 <ErrorMessage name="telefone" />
@@ -104,7 +116,11 @@ export default function PacienteForm() {
                 name="dataNascimento"
                 type="date"
                 placeholder=""
-                className="input-light-text-color p-2 rounded-md border-zinc-200 border-2"
+                className={`${
+                  darkMode
+                    ? "border-zinc-700 bg-[var(--primary-grey)] text-white"
+                    : "border-zinc-200 bg-white text-[var(--primary-grey)]"
+                } w-full p-2 rounded-md  border-2`}
               />
               <p className="text-orange text-sm font-bold">
                 <ErrorMessage name="dataNascimento" />
@@ -114,7 +130,11 @@ export default function PacienteForm() {
               <Field
                 name="peso"
                 type="number"
-                className="input-light-text-color p-2 rounded-md border-zinc-200 border-2"
+                className={`${
+                  darkMode
+                    ? "border-zinc-700 bg-[var(--primary-grey)] text-white"
+                    : "border-zinc-200 bg-white text-[var(--primary-grey)]"
+                } w-full p-2 rounded-md  border-2`}
               />
               <p className="text-orange text-sm font-bold">
                 <ErrorMessage name="peso" />
@@ -124,7 +144,11 @@ export default function PacienteForm() {
               <Field
                 name="altura"
                 type="number"
-                className="input-light-text-color p-2 rounded-md border-zinc-200 border-2"
+                className={`${
+                  darkMode
+                    ? "border-zinc-700 bg-[var(--primary-grey)] text-white"
+                    : "border-zinc-200 bg-white text-[var(--primary-grey)]"
+                } w-full p-2 rounded-md  border-2`}
               />
               <p className="text-orange text-sm font-bold">
                 <ErrorMessage name="altura" />
@@ -135,7 +159,11 @@ export default function PacienteForm() {
                 name="convenio"
                 type="text"
                 placeholder="Empresa de convênio"
-                className="input-light-text-color p-2 rounded-md border-zinc-200 border-2"
+                className={`${
+                  darkMode
+                    ? "border-zinc-700 bg-[var(--primary-grey)] text-white"
+                    : "border-zinc-200 bg-white text-[var(--primary-grey)]"
+                } w-full p-2 rounded-md  border-2`}
               />
               <p className="text-orange text-sm font-bold">
                 <ErrorMessage name="convenio" />
@@ -146,7 +174,11 @@ export default function PacienteForm() {
                 name="codigoConvenio"
                 type="text"
                 placeholder="Código do convênio"
-                className="input-light-text-color p-2 rounded-md border-zinc-200 border-2"
+                className={`${
+                  darkMode
+                    ? "border-zinc-700 bg-[var(--primary-grey)] text-white"
+                    : "border-zinc-200 bg-white text-[var(--primary-grey)]"
+                } w-full p-2 rounded-md  border-2`}
               />
               <p className="text-orange text-sm font-bold">
                 <ErrorMessage name="codigoConvenio" />

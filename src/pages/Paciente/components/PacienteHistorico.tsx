@@ -15,7 +15,7 @@ export default function PacienteHistorico({ p }: PacienteInfoProps) {
     useState<FormNovaConsultaValues | null>(null);
   const [indexHistorico, setIndexHistorico] = useState<number | null>();
 
-  const { novaConsulta, excluirConsulta } = useContext(Context)!;
+  const { novaConsulta, excluirConsulta, darkMode } = useContext(Context)!;
   const initialValuesNovaConsulta = consultaAtual || {
     dataConsulta: null,
     peso: 0,
@@ -115,7 +115,11 @@ export default function PacienteHistorico({ p }: PacienteInfoProps) {
   }
   return (
     <div>
-      <div className="py-4 h-full w-full min-h-[200px] border-t-2 flex-1 flex flex-col gap-3">
+      <div
+        className={`${
+          darkMode ? "border-zinc-700" : "border-zinc-200"
+        } py-4 h-full w-full min-h-[200px] border-t-2 flex-1 flex flex-col gap-3`}
+      >
         <button
           className="ml-4 button-orange shadowblack w-fit"
           onClick={() => setModalVisivel(true)}
@@ -147,8 +151,14 @@ export default function PacienteHistorico({ p }: PacienteInfoProps) {
       </div>
 
       {modalVisivel && (
-        <div className="modal ">
-          <div className="modal-content w-[400px]">
+        <div className="modal">
+          <div
+            className={`modal-content w-[400px] ${
+              darkMode
+                ? "bg-[var(--primary-grey)] text-white"
+                : "bg-white text-[var(--primary-grey)]"
+            }`}
+          >
             <h2 className="font-bold mb-2">
               {atualizando
                 ? "Atualizar informações da consulta"
@@ -167,7 +177,11 @@ export default function PacienteHistorico({ p }: PacienteInfoProps) {
                     name="dataConsulta"
                     type="date"
                     placeholder=""
-                    className="w-fit input-light-text-color p-2 rounded-md border-zinc-200 border-2"
+                    className={`${
+                      darkMode
+                        ? "border-zinc-700 bg-[var(--primary-grey)] text-white"
+                        : "border-zinc-200 bg-white text-[var(--primary-grey)]"
+                    } w-fit  p-2 rounded-md  border-2`}
                   />
                   <p className="text-orange text-sm font-bold">
                     <ErrorMessage name="dataConsulta" />
@@ -177,7 +191,11 @@ export default function PacienteHistorico({ p }: PacienteInfoProps) {
                   <Field
                     name="peso"
                     type="number"
-                    className="w-[100px] input-light-text-color p-2 rounded-md border-zinc-200 border-2"
+                    className={`${
+                      darkMode
+                        ? "border-zinc-700 bg-[var(--primary-grey)] text-white"
+                        : "border-zinc-200 bg-white text-[var(--primary-grey)]"
+                    } w-[100px]  p-2 rounded-md  border-2`}
                   />
                   <p className="text-orange text-sm font-bold">
                     <ErrorMessage name="peso" />
@@ -189,7 +207,11 @@ export default function PacienteHistorico({ p }: PacienteInfoProps) {
                     as="textarea"
                     type="text"
                     placeholder="Descreva a consulta"
-                    className="w-full input-light-text-color p-2 rounded-md border-zinc-200 border-2"
+                    className={`${
+                      darkMode
+                        ? "border-zinc-700 bg-[var(--primary-grey)] text-white"
+                        : "border-zinc-200 bg-white text-[var(--primary-grey)]"
+                    } w-full p-2 rounded-md  border-2`}
                   />
                   <p className="text-orange text-sm font-bold">
                     <ErrorMessage name="notas" />
@@ -215,7 +237,13 @@ export default function PacienteHistorico({ p }: PacienteInfoProps) {
       )}
       {modalDeleteVisivel && (
         <div className="modal">
-          <div className="modal-content w-[400px]">
+          <div
+            className={`modal-content w-[400px] ${
+              darkMode
+                ? "bg-[var(--primary-grey)] text-white"
+                : "bg-white text-[var(--primary-grey)]"
+            }`}
+          >
             <h2 className="font-bold mb-2">Confirmar Exclusão</h2>
             <p className="mb-2">
               Tem certeza que deseja excluir essa consulta?

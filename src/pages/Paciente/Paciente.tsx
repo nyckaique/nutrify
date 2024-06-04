@@ -11,17 +11,21 @@ import PacienteTab from "./components/PacienteTab";
 export function Paciente() {
   const location = useLocation();
   const { id } = location.state || {};
-  const { loadPaciente, paciente } = useContext(Context)!;
+  const { loadPaciente, paciente, darkMode } = useContext(Context)!;
   useEffect(() => {
     loadPaciente(id);
   }, [id]);
   return (
-    <div className="min-h-screen bg-white p-4 bg-orange flex">
+    <div className="min-h-screen p-4 bg-orange flex">
       <Sidebar pageid={1} />
       <Container>
         <Userbar />
         <Pagetitle titulo="Paciente" />
-        <div className="rounded-lg shadowblack p-3 border-zinc-200 border-[1px] h-full flex flex-col gap-3 overflow-hidden">
+        <div
+          className={`rounded-lg shadowblack p-3 ${
+            darkMode ? "border-zinc-700" : "border-zinc-200"
+          }  border-[1px] h-full flex flex-col gap-3 overflow-hidden`}
+        >
           <div className="scrollable-form">
             {paciente && <PacienteInfo p={paciente} />}
             {paciente && <PacienteTab p={paciente} />}

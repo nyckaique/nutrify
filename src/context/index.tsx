@@ -72,6 +72,8 @@ interface ContextType {
   excluirPlano: (indexPlano: number, filePath: string) => Promise<void>;
   expanded: boolean;
   setExpanded: (expanded: boolean) => void;
+  darkMode: boolean;
+  setDarkMode: (darkmode: boolean) => void;
 }
 export interface PacienteResumo {
   id: string;
@@ -108,6 +110,7 @@ export default function Provider({ children }: ProviderProps) {
   const [pacientes, setPacientes] = useState<PacienteResumo[]>();
   const [paciente, setPaciente] = useState<Paciente>();
   const [expanded, setExpanded] = useState(true);
+  const [darkMode, setDarkMode] = useState(false);
 
   const navigate = useNavigate();
 
@@ -411,6 +414,8 @@ export default function Provider({ children }: ProviderProps) {
         excluirPlano,
         expanded,
         setExpanded,
+        darkMode,
+        setDarkMode,
       }}
     >
       {children}

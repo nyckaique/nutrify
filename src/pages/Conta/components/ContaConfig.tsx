@@ -6,7 +6,7 @@ import { doc, updateDoc } from "firebase/firestore";
 import { getDownloadURL, uploadBytes, ref } from "firebase/storage";
 
 export function ContaConfig() {
-  const { user, setUser, storageUser } = useContext(Context)!;
+  const { user, setUser, storageUser, darkMode } = useContext(Context)!;
   const [avatarUrl, setAvatarUrl] = useState(user && user.avatarUrl);
   const [imagemAvatar, setImagemAvatar] = useState<File | null>(null);
 
@@ -95,7 +95,11 @@ export function ContaConfig() {
   }
 
   return (
-    <div className="rounded-lg shadowblack p-3 flex flex-col items-center border-zinc-200 border-[1px] overflow-auto">
+    <div
+      className={`${
+        darkMode ? "border-zinc-700" : "border-zinc-200"
+      } rounded-lg shadowblack p-3 flex flex-col items-center  border-[1px] overflow-auto`}
+    >
       <form
         method="post"
         onSubmit={formSubmit}
@@ -136,7 +140,11 @@ export function ContaConfig() {
         <input
           type="text"
           name="name"
-          className="max-w-[400px] input-light-text-color p-2 rounded-md border-zinc-200 border-2"
+          className={`${
+            darkMode
+              ? "border-zinc-700 bg-[var(--primary-grey)] text-white"
+              : "border-zinc-200 bg-white text-[var(--primary-grey)]"
+          } w-full p-2 rounded-md  border-2`}
           placeholder="Novo nome"
           value={nome!}
           onChange={(e) => setNome(e.target.value)}
@@ -150,7 +158,11 @@ export function ContaConfig() {
         <input
           type="text"
           name="email"
-          className="max-w-[400px]  input-light-text-color p-2 rounded-md border-zinc-200 border-2 cursor-not-allowed"
+          className={`${
+            darkMode
+              ? "border-zinc-700 bg-[var(--primary-grey)] text-white"
+              : "border-zinc-200 bg-white text-[var(--primary-grey)]"
+          } w-full p-2 rounded-md  border-2 cursor-not-allowed`}
           placeholder="Novo email"
           value={user?.email}
           disabled

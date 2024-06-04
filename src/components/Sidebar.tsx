@@ -6,7 +6,8 @@ interface sidebarProps {
   pageid: number;
 }
 export default function Sidebar({ pageid }: sidebarProps) {
-  const { logout, expanded, setExpanded } = useContext(Context)!;
+  const { logout, expanded, setExpanded, setDarkMode, darkMode } =
+    useContext(Context)!;
   const navigate = useNavigate();
 
   function handleNavigate(pagenumber: number) {
@@ -24,9 +25,13 @@ export default function Sidebar({ pageid }: sidebarProps) {
   }
   return (
     <div
-      className={
+      className={`${
         expanded ? "sidebar sidebar-expanded" : "sidebar sidebar-not-expanded"
-      }
+      } ${
+        darkMode
+          ? "bg-[var(--primary-grey)] text-white"
+          : "bg-white text-[var(--primary-grey)]"
+      }`}
       style={{ height: "calc(100vh - 32px)" }}
     >
       <button
@@ -84,6 +89,24 @@ export default function Sidebar({ pageid }: sidebarProps) {
         >
           <i className="fa fa-sign-out" aria-hidden="true"></i>
           {expanded ? "Logout" : ""}
+        </button>
+        <button
+          onClick={() => setDarkMode(!darkMode)}
+          className={`${
+            darkMode ? "button-orange" : "button-orange-not-selected "
+          } flex items-center gap-2`}
+        >
+          {darkMode ? (
+            <>
+              <i className="fa fa-lightbulb-o text-lg" aria-hidden="true"></i>
+              {expanded ? " Light" : ""}
+            </>
+          ) : (
+            <>
+              <i className="fa fa-moon-o text-lg" aria-hidden="true"></i>
+              {expanded ? " Dark" : ""}
+            </>
+          )}
         </button>
       </div>
     </div>
