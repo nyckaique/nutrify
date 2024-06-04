@@ -70,6 +70,8 @@ interface ContextType {
     codigoConvenio?: string
   ) => Promise<void>;
   excluirPlano: (indexPlano: number, filePath: string) => Promise<void>;
+  expanded: boolean;
+  setExpanded: (expanded: boolean) => void;
 }
 export interface PacienteResumo {
   id: string;
@@ -105,6 +107,8 @@ export default function Provider({ children }: ProviderProps) {
   const [loading, setLoading] = useState(true);
   const [pacientes, setPacientes] = useState<PacienteResumo[]>();
   const [paciente, setPaciente] = useState<Paciente>();
+  const [expanded, setExpanded] = useState(true);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -405,6 +409,8 @@ export default function Provider({ children }: ProviderProps) {
         excluirConsulta,
         atualizarPaciente,
         excluirPlano,
+        expanded,
+        setExpanded,
       }}
     >
       {children}

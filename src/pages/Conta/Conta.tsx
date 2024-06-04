@@ -5,7 +5,7 @@ import Userbar from "../../components/Userbar";
 import { ContaConfig } from "./components/ContaConfig";
 export function Conta() {
   return (
-    <div className="min-h-screen p-4 bg-orange flex">
+    <div className="min-h-screen bg-white p-4 bg-orange flex">
       <Sidebar pageid={3} />
       <Container>
         <Userbar />

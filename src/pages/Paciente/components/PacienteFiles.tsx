@@ -134,7 +134,7 @@ export default function PacienteFiles({ p, path }: PacienteInfoProps) {
 
   return (
     <div>
-      <div className="pt-4 h-full flex-1 overflow-y-auto flex flex-col gap-3 ">
+      <div className="py-4 h-full w-full flex-1 border-t-2 overflow-y-auto flex flex-col gap-3 ">
         <button
           className="ml-4 button-orange shadowblack w-fit"
           onClick={() => setModalVisivel(true)}
@@ -167,7 +167,7 @@ export default function PacienteFiles({ p, path }: PacienteInfoProps) {
 
       {modalVisivel && (
         <div className="modal">
-          <div className="modal-content w-[400px]">
+          <div className="modal-content w-[400px] max-w-[80%] overflow-x-auto">
             <h2 className="font-bold mb-2 text-xl">{texto}</h2>
             <form method="post" onSubmit={formSubmit}>
               <input

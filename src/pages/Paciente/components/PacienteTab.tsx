@@ -10,13 +10,13 @@ export default function PacienteTab({ p }: PacienteInfoProps) {
   const [tabid, setTabid] = useState(1);
 
   return (
-    <div className="flex flex-col h-full overflow-hidden">
-      <div className="w-full flex gap-2 pb-4 border-b-2">
+    <div className="flex flex-col h-full w-full min-w-fit">
+      <div className="mx-auto w-fit sm:w-full flex gap-2 p-4  flex-col sm:flex-row">
         <button
           className={
             tabid === 1
               ? "button-orange shadowblack flex items-center gap-2"
-              : "button-orange-not-selected  text-gray flex items-center gap-2"
+              : "button-orange-not-selected text-gray flex items-center gap-2"
           }
           onClick={() => setTabid(1)}
         >

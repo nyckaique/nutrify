@@ -1,12 +1,12 @@
-import Logo from "./Logo";
 import { useContext } from "react";
-import { Context } from "../context";
+import Logo from "./Logo";
 import { useNavigate } from "react-router-dom";
+import { Context } from "../context";
 interface sidebarProps {
   pageid: number;
 }
 export default function Sidebar({ pageid }: sidebarProps) {
-  const { logout } = useContext(Context)!;
+  const { logout, expanded, setExpanded } = useContext(Context)!;
   const navigate = useNavigate();
 
   function handleNavigate(pagenumber: number) {
@@ -24,49 +24,68 @@ export default function Sidebar({ pageid }: sidebarProps) {
   }
   return (
     <div
-      className="max-w-[200px] min-w-fit flex flex-col bg-white rounded-l-lg p-3 gap-4 shadowblack"
+      className={
+        expanded ? "sidebar sidebar-expanded" : "sidebar sidebar-not-expanded"
+      }
       style={{ height: "calc(100vh - 32px)" }}
     >
-      <Logo />
       <button
-        className={
-          pageid === 1
-            ? "button-orange shadowblack flex items-center gap-2"
-            : "button-orange-not-selected  text-gray flex items-center gap-2"
-        }
-        onClick={() => handleNavigate(1)}
+        onClick={() => setExpanded(!expanded)}
+        className={`transition-all hover:text-[var(--primary-orange)] h-[40px] flex items-center ${
+          expanded ? "justify-end" : "justify-center"
+        }`}
       >
-        <i className="fa fa-users" aria-hidden="true"></i>Pacientes
+        {expanded ? (
+          <i className="fa fa-arrow-left ml-auto" aria-hidden="true"></i>
+        ) : (
+          <i className="fa fa-arrow-right" aria-hidden="true"></i>
+        )}
       </button>
-      <button
-        className={
-          pageid === 2
-            ? "button-orange shadowblack flex items-center gap-2"
-            : "button-orange-not-selected  text-gray flex items-center gap-2"
-        }
-        onClick={() => handleNavigate(2)}
-      >
-        <i className="fa fa-plus" aria-hidden="true"></i>Novo Paciente
-      </button>
-      <button
-        className={
-          pageid === 3
-            ? "button-orange shadowblack flex items-center gap-2"
-            : "button-orange-not-selected  text-gray flex items-center gap-2"
-        }
-        onClick={() => handleNavigate(3)}
-      >
-        <i className="fa fa-cog" aria-hidden="true"></i>Conta
-      </button>
-      <button
-        className={
-          "button-orange-not-selected  text-gray flex items-center gap-2"
-        }
-        onClick={() => logout()}
-      >
-        <i className="fa fa-sign-out" aria-hidden="true"></i>
-        Logout
-      </button>
+      <Logo expanded={expanded} />
+      <div className="flex flex-col gap-3 mx-auto">
+        <button
+          className={
+            pageid === 1
+              ? "button-orange shadowblack flex items-center gap-2"
+              : "button-orange-not-selected  text-gray flex items-center gap-2"
+          }
+          onClick={() => handleNavigate(1)}
+        >
+          <i className="fa fa-users" aria-hidden="true"></i>
+          {expanded ? "Pacientes" : ""}
+        </button>
+        <button
+          className={
+            pageid === 2
+              ? "button-orange shadowblack flex items-center gap-2"
+              : "button-orange-not-selected  text-gray flex items-center gap-2"
+          }
+          onClick={() => handleNavigate(2)}
+        >
+          <i className="fa fa-plus" aria-hidden="true"></i>
+          {expanded ? "Novo Paciente" : ""}
+        </button>
+        <button
+          className={
+            pageid === 3
+              ? "button-orange shadowblack flex items-center gap-2"
+              : "button-orange-not-selected  text-gray flex items-center gap-2"
+          }
+          onClick={() => handleNavigate(3)}
+        >
+          <i className="fa fa-cog" aria-hidden="true"></i>
+          {expanded ? "Conta" : ""}
+        </button>
+        <button
+          className={
+            "button-orange-not-selected  text-gray flex items-center gap-2"
+          }
+          onClick={() => logout()}
+        >
+          <i className="fa fa-sign-out" aria-hidden="true"></i>
+          {expanded ? "Logout" : ""}
+        </button>
+      </div>
     </div>
   );
 }

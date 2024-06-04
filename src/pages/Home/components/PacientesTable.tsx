@@ -44,13 +44,13 @@ export default function PacientesTable() {
   }
 
   return (
-    <div className="overflow-hidden rounded-lg shadowblack">
+    <div className="overflow-hidden rounded-lg shadowblack w-full max-w-[1200px] mx-auto">
       <div className="scrollable-table">
         <table className="bg-white ">
           <thead>
-            <tr>
+            <tr className="bg-[var(--primary-orange)]">
               <th className="p-2 sticky top-0 bg-[var(--primary-orange)]">
-                <p className="flex gap-2 items-center">
+                <p className="flex gap-2 items-center flex-wrap">
                   Nome{" "}
                   <input
                     className="p-1 rounded-lg bg-white bg-opacity-30 placeholder:text-white max-w-[180px]  sticky top-0"

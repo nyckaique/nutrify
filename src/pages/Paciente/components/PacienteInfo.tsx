@@ -92,7 +92,7 @@ export default function PacienteInfo({ p }: PacienteInfoProps) {
   }
 
   return (
-    <div>
+    <div className="text-wrap">
       <h1 className="text-2xl font-bold mb-4 text-orange">
         {p.nome}{" "}
         <button
@@ -102,7 +102,7 @@ export default function PacienteInfo({ p }: PacienteInfoProps) {
           <i className="fa fa-pencil" aria-hidden="true"></i>
         </button>
       </h1>
-      <div className="flex gap-6 justify-between flex-wrap max-w-[800px]">
+      <div className="flex gap-2 justify-between flex-wrap max-w-[800px]">
         <p className="text-nowrap">
           <span className="font-bold">Idade:</span>{" "}
           {calcularIdade(p.dataNascimento)}
@@ -129,15 +129,15 @@ export default function PacienteInfo({ p }: PacienteInfoProps) {
         </p>
         <p className="text-nowrap">
           <span className="font-bold">Convênio:</span> {p.convenio}{" "}
-          {p.codigoConvenio ? (
-            <span>
-              <span className="font-bold">Código:</span>
-              {p.codigoConvenio}
-            </span>
-          ) : (
-            ""
-          )}
         </p>
+        {p.codigoConvenio ? (
+          <span>
+            <span className="font-bold">Código do Convênio: </span>
+            {p.codigoConvenio}
+          </span>
+        ) : (
+          ""
+        )}
       </div>
       {modalVisivel && (
         <div className="modal ">

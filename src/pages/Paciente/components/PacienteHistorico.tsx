@@ -114,34 +114,36 @@ export default function PacienteHistorico({ p }: PacienteInfoProps) {
     setModalDeleteVisivel(false);
   }
   return (
-    <div className="pt-4 h-full flex-1 overflow-y-auto flex flex-col gap-3 ">
-      <button
-        className="ml-4 button-orange shadowblack w-fit"
-        onClick={() => setModalVisivel(true)}
-      >
-        Nova Consulta
-      </button>
+    <div>
+      <div className="py-4 h-full w-full min-h-[200px] border-t-2 flex-1 flex flex-col gap-3">
+        <button
+          className="ml-4 button-orange shadowblack w-fit"
+          onClick={() => setModalVisivel(true)}
+        >
+          Nova Consulta
+        </button>
 
-      <div className="h-full flex flex-col gap-3 py-3">
-        {historicoOrdenado.length > 0 &&
-          historicoOrdenado.map((consulta, index) => (
-            <p key={index}>
-              <button
-                onClick={() => handleEditarConsulta(consulta.originalIndex)}
-                className="mr-4 hover:text-[var(--primary-orange)] w-[30px]"
-              >
-                <i className="fa fa-pencil" aria-hidden="true"></i>
-              </button>
-              <button
-                onClick={() => handleExcluirConsulta(consulta.originalIndex)}
-                className="mr-4 hover:text-[var(--primary-orange)] w-[30px]"
-              >
-                <i className="fa fa-times" aria-hidden="true"></i>
-              </button>
-              {formatarData(consulta.data)} - Peso: {consulta.peso}kg -{" "}
-              {consulta.notas}{" "}
-            </p>
-          ))}
+        <div className="h-full flex flex-col gap-3 py-3">
+          {historicoOrdenado.length > 0 &&
+            historicoOrdenado.map((consulta, index) => (
+              <p key={index}>
+                <button
+                  onClick={() => handleEditarConsulta(consulta.originalIndex)}
+                  className="mr-4 hover:text-[var(--primary-orange)] w-[30px]"
+                >
+                  <i className="fa fa-pencil" aria-hidden="true"></i>
+                </button>
+                <button
+                  onClick={() => handleExcluirConsulta(consulta.originalIndex)}
+                  className="mr-4 hover:text-[var(--primary-orange)] w-[30px]"
+                >
+                  <i className="fa fa-times" aria-hidden="true"></i>
+                </button>
+                {formatarData(consulta.data)} - Peso: {consulta.peso}kg -{" "}
+                {consulta.notas}{" "}
+              </p>
+            ))}
+        </div>
       </div>
 
       {modalVisivel && (

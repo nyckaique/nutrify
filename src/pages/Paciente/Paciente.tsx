@@ -16,14 +16,16 @@ export function Paciente() {
     loadPaciente(id);
   }, [id]);
   return (
-    <div className="min-h-screen p-4 bg-orange flex">
+    <div className="min-h-screen bg-white p-4 bg-orange flex">
       <Sidebar pageid={1} />
       <Container>
         <Userbar />
         <Pagetitle titulo="Paciente" />
         <div className="rounded-lg shadowblack p-3 border-zinc-200 border-[1px] h-full flex flex-col gap-3 overflow-hidden">
-          {paciente && <PacienteInfo p={paciente} />}
-          {paciente && <PacienteTab p={paciente} />}
+          <div className="scrollable-form">
+            {paciente && <PacienteInfo p={paciente} />}
+            {paciente && <PacienteTab p={paciente} />}
+          </div>
         </div>
       </Container>
     </div>

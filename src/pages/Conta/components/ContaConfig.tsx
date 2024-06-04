@@ -95,13 +95,13 @@ export function ContaConfig() {
   }
 
   return (
-    <div className="rounded-lg shadowblack p-3 flex flex-col items-center border-zinc-200 border-[1px]">
+    <div className="rounded-lg shadowblack p-3 flex flex-col items-center border-zinc-200 border-[1px] overflow-auto">
       <form
         method="post"
         onSubmit={formSubmit}
-        className="flex flex-col gap-2 max-w-[400px] w-fit"
+        className="flex flex-col gap-2 max-w-[500px] w-fit"
       >
-        <div className="flex items-center gap-10 mb-8">
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-8">
           <label className="labelAvatar">
             <span>
               <i className="fa fa-cloud-upload" aria-hidden="true"></i>
@@ -127,7 +127,7 @@ export function ContaConfig() {
             )}
           </label>
 
-          <div className="flex flex-col justify-evenly text-lg font-bold h-full">
+          <div className="flex flex-col justify-evenly text-lg font-bold">
             <p>{user?.nome}</p>
             <p>{user?.email}</p>
           </div>
@@ -136,7 +136,7 @@ export function ContaConfig() {
         <input
           type="text"
           name="name"
-          className="input-light-text-color p-2 rounded-md border-zinc-200 border-2"
+          className="max-w-[400px] input-light-text-color p-2 rounded-md border-zinc-200 border-2"
           placeholder="Novo nome"
           value={nome!}
           onChange={(e) => setNome(e.target.value)}
@@ -150,12 +150,12 @@ export function ContaConfig() {
         <input
           type="text"
           name="email"
-          className="input-light-text-color p-2 rounded-md border-zinc-200 border-2 cursor-not-allowed"
+          className="max-w-[400px]  input-light-text-color p-2 rounded-md border-zinc-200 border-2 cursor-not-allowed"
           placeholder="Novo email"
           value={user?.email}
           disabled
         />
-        <div className="flex justify-between gap-2 flex-wrap items-center">
+        <div className="max-w-[400px]  flex justify-between gap-2 flex-wrap items-center">
           <button type="submit" className="button-orange flex-1">
             Atualizar informações
           </button>

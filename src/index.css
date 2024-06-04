@@ -40,10 +40,10 @@
   @apply w-full flex gap-2 justify-between;
 }
 .button-orange {
-  @apply px-4 py-2 bg-[var(--primary-orange)] min-w-fit rounded-md text-white hover:bg-orange-700 hover:scale-105 transition-all;
+  @apply px-4 py-2 bg-[var(--primary-orange)] min-w-fit min-h-[40px] text-nowrap rounded-md text-white hover:bg-orange-700 hover:scale-105 transition-all;
 }
 .button-orange-not-selected {
-  @apply px-4 py-2 bg-transparent min-w-fit rounded-md hover:bg-orange-700 hover:scale-105 hover:text-white transition-all;
+  @apply px-4 py-2 bg-transparent min-w-fit min-h-[40px] text-nowrap rounded-md hover:bg-orange-700 hover:scale-105 hover:text-white transition-all;
 }
 .shadowblack {
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
@@ -103,4 +103,13 @@
 }
 .button-input-file::file-selector-button {
   @apply px-4 py-2 bg-[var(--primary-orange)] min-w-fit rounded-md text-white hover:bg-orange-700 cursor-pointer transition-all border-none;
+}
+.sidebar {
+  @apply min-w-fit flex flex-col bg-white rounded-l-lg p-3 gap-4 shadowblack overflow-y-auto;
+}
+.sidebar-not-expanded {
+  @apply w-fit;
+}
+.sidebar-expanded {
+  @apply max-w-[200px] w-[250px];
 }
