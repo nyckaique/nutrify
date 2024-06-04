@@ -14,8 +14,6 @@ export function ContaConfig() {
   const [nome, setNome] = useState(user && user.nome);
   const [errorShow, setErrorShow] = useState(false);
   const [errorNome, setErrorNome] = useState("");
-  const [modalVisivel, setModalVisivel] = useState(false);
-  const [email, setEmail] = useState<string>(user!.email);
   const nomeRegex = /^[A-Za-z]{3,}(?: [A-Za-z]{3,})*$/;
 
   async function formSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -96,15 +94,13 @@ export function ContaConfig() {
       }
     }
   }
-  async function handleResetEmail(event: React.FormEvent) {
-    event.preventDefault();
+  async function handleResetEmail() {
     try {
-      await sendPasswordResetEmail(auth, email);
+      await sendPasswordResetEmail(auth, user!.email);
       toast.success("Um e-mail de redefinição de senha foi enviado.");
     } catch (error) {
       toast.error("Erro ao enviar e-mail de redefinição de senha.");
     }
-    setModalVisivel(false);
   }
 
   return (
@@ -185,7 +181,7 @@ export function ContaConfig() {
             Atualizar informações
           </button>
           <button
-            onClick={() => setModalVisivel(true)}
+            onClick={handleResetEmail}
             type="button"
             className="button-orange flex-1"
           >
@@ -193,47 +189,6 @@ export function ContaConfig() {
           </button>
         </div>
       </form>
-      {modalVisivel && (
-        <div className="modal">
-          <form
-            method="post"
-            onSubmit={handleResetEmail}
-            className="w-fit mx-auto"
-          >
-            <div
-              className={`modal-content ${
-                darkMode
-                  ? "bg-[var(--primary-grey)] text-white"
-                  : "bg-white text-[var(--primary-grey)]"
-              }`}
-            >
-              <h2 className="font-bold mb-2">Redefinir senha</h2>
-              <p className="mb-2">Informe um e-mail para redefinir sua senha</p>
-              <input
-                type="email"
-                name="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className={`${
-                  darkMode
-                    ? "border-zinc-700 bg-[var(--primary-grey)] text-white"
-                    : "border-zinc-200 bg-white text-[var(--primary-grey)]"
-                } w-full p-2 rounded-md  border-2`}
-              />
-              <button type="submit" className="button-orange">
-                Confirmar
-              </button>
-              <button
-                type="button"
-                className="button-orange"
-                onClick={() => setModalVisivel(false)}
-              >
-                Cancelar
-              </button>
-            </div>
-          </form>
-        </div>
-      )}
     </div>
   );
 }
