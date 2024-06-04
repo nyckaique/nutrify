@@ -1,7 +1,8 @@
 import { Context } from "../../../context";
 import { useContext } from "react";
-import { Formik, Field, Form, ErrorMessage } from "formik";
+import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import FormContainer from "../../../components/FormContainer";
 
 const initialValuesLogin = {
   email: "",
@@ -14,63 +15,50 @@ const validationSchemaLogin = Yup.object({
     .max(50, "Senha muito longa")
     .required("Obrigatório"),
 });
-interface FormLoginValues {
-  email: string;
-  password: string;
-}
+
 interface FormProps {
   setIsLogando: (boolean: boolean) => void;
 }
 
 export default function LoginForm({ setIsLogando }: FormProps) {
   const { signin } = useContext(Context)!;
-  function handleLogin(values: FormLoginValues) {
+  function handleLogin(values: { email: string; password: string }) {
     signin(values.email, values.password);
   }
   return (
     <Formik
-      enableReinitialize
       initialValues={initialValuesLogin}
       onSubmit={handleLogin}
       validationSchema={validationSchemaLogin}
     >
-      {() => (
-        <Form className="container-flex-col">
+      {({ handleSubmit }) => (
+        <FormContainer
+          title="Login"
+          onSubmit={handleSubmit}
+          toggleForm={() => setIsLogando(false)}
+          toggleText="Faça seu cadastro!"
+        >
           <div>E-mail</div>
           <Field
-            autoComplete="off"
             name="email"
             type="email"
             placeholder="E-mail"
-            className="input-light-text-color p-2 rounded-md glassmorphism-container"
+            className="input-light-text-color p-2 rounded-md glassmorphism-container w-full"
           />
           <p className="text-orange text-sm font-bold">
             <ErrorMessage name="email" />
           </p>
-
           <div>Senha</div>
           <Field
             name="password"
             type="password"
             placeholder="Senha"
-            className="input-light-text-color p-2 rounded-md glassmorphism-container"
+            className="input-light-text-color p-2 rounded-md glassmorphism-container w-full"
           />
           <p className="text-orange text-sm font-bold">
             <ErrorMessage name="password" />
           </p>
-
-          <button type="submit" className="button-orange mx-auto mt-5">
-            Login
-          </button>
-
-          <button
-            type="button"
-            className="mx-auto mt-5 underline"
-            onClick={() => setIsLogando(false)}
-          >
-            Faça seu cadastro!
-          </button>
-        </Form>
+        </FormContainer>
       )}
     </Formik>
   );

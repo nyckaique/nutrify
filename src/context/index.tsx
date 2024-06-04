@@ -21,7 +21,7 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { deleteObject, ref } from "firebase/storage";
 
-interface ProviderProps {
+export interface ProviderProps {
   children: ReactNode;
 }
 interface ContextType {

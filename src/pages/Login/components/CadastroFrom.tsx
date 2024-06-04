@@ -1,13 +1,8 @@
 import { Context } from "../../../context";
 import { useContext } from "react";
-import { Formik, Field, Form, ErrorMessage } from "formik";
+import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-
-interface FormCadastroValues {
-  name: string;
-  email: string;
-  password: string;
-}
+import FormContainer from "../../../components/FormContainer";
 
 const initialValuesCadastro = {
   name: "",
@@ -28,12 +23,18 @@ const validationSchemaCadastro = Yup.object({
     .max(50, "Senha muito longa")
     .required("Obrigatório"),
 });
+
 interface FormProps {
   setIsLogando: (boolean: boolean) => void;
 }
+
 export default function CadastroFrom({ setIsLogando }: FormProps) {
   const { signup } = useContext(Context)!;
-  function handleCadastro(values: FormCadastroValues) {
+  function handleCadastro(values: {
+    name: string;
+    email: string;
+    password: string;
+  }) {
     signup(values.name, values.email, values.password);
   }
   return (
@@ -43,8 +44,13 @@ export default function CadastroFrom({ setIsLogando }: FormProps) {
       onSubmit={handleCadastro}
       validationSchema={validationSchemaCadastro}
     >
-      {() => (
-        <Form className="container-flex-col">
+      {({ handleSubmit }) => (
+        <FormContainer
+          title="Registrar"
+          onSubmit={handleSubmit}
+          toggleForm={() => setIsLogando(true)}
+          toggleText="Faça login!"
+        >
           <div>Nome</div>
           <Field
             autoComplete="off"
@@ -78,18 +84,7 @@ export default function CadastroFrom({ setIsLogando }: FormProps) {
           <p className="text-orange text-sm font-bold">
             <ErrorMessage name="password" />
           </p>
-
-          <button type="submit" className="button-orange mx-auto mt-5">
-            Registrar
-          </button>
-          <button
-            type="button"
-            className="mx-auto mt-5 underline"
-            onClick={() => setIsLogando(true)}
-          >
-            Faça login!
-          </button>
-        </Form>
+        </FormContainer>
       )}
     </Formik>
   );
