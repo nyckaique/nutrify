@@ -48,7 +48,14 @@ export default function PacientesTable() {
   function handleVisualizarPaciente(id: string) {
     navigate("/paciente", { state: { id } });
   }
-
+  function formatarData(data: string): string {
+    const partes = data.split("-");
+    if (partes.length !== 3) {
+      return data;
+    }
+    const [ano, mes, dia] = partes;
+    return `${dia}/${mes}/${ano}`;
+  }
   return (
     <div className="overflow-hidden rounded-lg shadowblack w-full max-w-[1200px] mx-auto">
       <div className="scrollable-table">
@@ -86,7 +93,9 @@ export default function PacientesTable() {
             {pacientesFiltrados?.map((paciente: PacienteResumo) => (
               <tr key={paciente.id}>
                 <td className="p-2">{paciente.nome}</td>
-                <td className="p-2 text-center">{paciente.ultimaConsulta}</td>
+                <td className="p-2 text-center">
+                  {formatarData(paciente.ultimaConsulta)}
+                </td>
                 <td className="p-2 text-center">
                   <p className="hover:text-[var(--primary-orange)]">
                     <a

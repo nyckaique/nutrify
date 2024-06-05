@@ -235,10 +235,15 @@ export default function Provider({ children }: ProviderProps) {
     onSnapshot(q, (snapshot) => {
       const lista: PacienteResumo[] = [];
       snapshot.forEach((doc) => {
+        const historico = doc.data().historico;
+        const ultimaConsulta =
+          historico && historico.length > 0
+            ? historico[historico.length - 1].data
+            : "nenhuma consulta";
         lista.push({
           id: doc.id,
           nome: doc.data().nomePaciente,
-          ultimaConsulta: doc.data().historico ? "1" : "0",
+          ultimaConsulta: ultimaConsulta,
           telefone: doc.data().telefone,
         });
       });
@@ -365,7 +370,7 @@ export default function Provider({ children }: ProviderProps) {
       codigoConvenio: codigoConvenio,
     })
       .then(() => {
-        toast.success("Paciente com sucesso");
+        toast.success("Atualizado com sucesso");
       })
       .catch(() => {
         toast.error("Não foi possível atualizar os dados do paciente");
