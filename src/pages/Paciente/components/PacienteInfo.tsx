@@ -42,11 +42,11 @@ export default function PacienteInfo({ p }: PacienteInfoProps) {
   const validationSchemaPaciente = Yup.object({
     name: Yup.string()
       .matches(
-        /^[A-Za-z]{3,}(?: [A-Za-z]{3,})*$/,
-        "Nome e/ou sobrenome inválido. Cada um deve ter pelo menos 3 letras."
+        /^[A-Za-zÀ-ÿ]{2,}(?: [A-Za-zÀ-ÿ]{2,})*$/,
+        "Nome e/ou sobrenome inválido. Cada um deve ter pelo menos 2 letras."
       )
       .max(50, "Nome muito longo")
-      .required("Nome é obrigatório"),
+      .required("Obrigatório"),
     telefone: Yup.string()
       .matches(/^\d{10,11}$/, "O telefone deve conter 10 ou 11 dígitos.")
       .required("Telefone é obrigatório"),

@@ -12,8 +12,8 @@ const initialValuesCadastro = {
 const validationSchemaCadastro = Yup.object({
   name: Yup.string()
     .matches(
-      /^[A-Za-z]{3,}(?: [A-Za-z]{3,})*$/,
-      "Nome e/ou sobrenome inválido. Cada um deve ter pelo menos 3 letras."
+      /^[A-Za-zÀ-ÿ]{2,}(?: [A-Za-zÀ-ÿ]{2,})*$/,
+      "Nome e/ou sobrenome inválido. Cada um deve ter pelo menos 2 letras."
     )
     .max(50, "Nome muito longo")
     .required("Obrigatório"),

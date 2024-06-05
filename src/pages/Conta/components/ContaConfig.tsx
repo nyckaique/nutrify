@@ -14,13 +14,13 @@ export function ContaConfig() {
   const [nome, setNome] = useState(user && user.nome);
   const [errorShow, setErrorShow] = useState(false);
   const [errorNome, setErrorNome] = useState("");
-  const nomeRegex = /^[A-Za-z]{3,}(?: [A-Za-z]{3,})*$/;
+  const nomeRegex = /^[A-Za-zÀ-ÿ]{2,}(?: [A-Za-zÀ-ÿ]{2,})*$/;
 
   async function formSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!nomeRegex.test(nome!)) {
       setErrorNome(
-        "Nome e/ou sobrenome inválido. Cada um deve ter pelo menos 3 letras."
+        "Nome e/ou sobrenome inválido. Cada um deve ter pelo menos 2 letras."
       );
       setErrorShow(true);
       e.preventDefault();

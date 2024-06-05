@@ -1,10 +1,10 @@
-import { Formik, Field, Form, ErrorMessage } from "formik";
+import { Formik, Field, Form, ErrorMessage, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import { useContext } from "react";
 import { Context } from "../../../context";
 
 const initialValuesPaciente = {
-  dataNascimento: null,
+  dataNascimento: new Date(),
   name: "",
   telefone: "",
   peso: 0,
@@ -15,11 +15,11 @@ const initialValuesPaciente = {
 const validationSchemaPaciente = Yup.object({
   name: Yup.string()
     .matches(
-      /^[A-Za-z]{3,}(?: [A-Za-z]{3,})*$/,
-      "Nome e/ou sobrenome inválido. Cada um deve ter pelo menos 3 letras."
+      /^[A-Za-zÀ-ÿ]{2,}(?: [A-Za-zÀ-ÿ]{2,})*$/,
+      "Nome e/ou sobrenome inválido. Cada um deve ter pelo menos 2 letras."
     )
     .max(50, "Nome muito longo")
-    .required("Nome é obrigatório"),
+    .required("Obrigatório"),
   telefone: Yup.string()
     .matches(/^\d{10,11}$/, "O telefone deve conter 10 ou 11 dígitos.")
     .required("Telefone é obrigatório"),
@@ -43,7 +43,7 @@ const validationSchemaPaciente = Yup.object({
 interface FormPacienteValues {
   name: string;
   telefone: string;
-  dataNascimento: Date | null;
+  dataNascimento: Date;
   peso: number;
   altura: number;
   convenio: string;
@@ -52,7 +52,10 @@ interface FormPacienteValues {
 
 export default function PacienteForm() {
   const { cadastrarPaciente, darkMode } = useContext(Context)!;
-  function handleNovoPaciente(values: FormPacienteValues) {
+  function handleNovoPaciente(
+    values: FormPacienteValues,
+    { resetForm }: FormikHelpers<FormPacienteValues>
+  ) {
     if (values.dataNascimento) {
       cadastrarPaciente(
         values.name,
@@ -63,6 +66,7 @@ export default function PacienteForm() {
         values.convenio,
         values.codigoConvenio
       );
+      resetForm();
     }
   }
   return (
@@ -78,7 +82,7 @@ export default function PacienteForm() {
           onSubmit={handleNovoPaciente}
           validationSchema={validationSchemaPaciente}
         >
-          {() => (
+          {({ isSubmitting }) => (
             <Form className="container-flex-col max-w-[400px]">
               <div>Nome</div>
               <Field
@@ -184,7 +188,11 @@ export default function PacienteForm() {
                 <ErrorMessage name="codigoConvenio" />
               </p>
 
-              <button type="submit" className="button-orange mx-auto mt-5">
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="button-orange mx-auto mt-5"
+              >
                 Cadastrar
               </button>
             </Form>
