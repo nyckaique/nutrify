@@ -47,7 +47,7 @@ export default function Sidebar({ pageid }: sidebarProps) {
         )}
       </button>
       <Logo expanded={expanded} />
-      <div className="flex flex-col gap-3 mx-auto">
+      <div className="flex flex-col gap-3 mx-auto h-full">
         <button
           className={
             pageid === 1
@@ -108,6 +108,20 @@ export default function Sidebar({ pageid }: sidebarProps) {
             </>
           )}
         </button>
+        <p
+          className={`pb-2 text-[.8em] text-center mt-auto text-wrap ${
+            expanded ? "" : "hidden"
+          }`}
+        >
+          Desenvolvido por <br />
+          <a
+            className="underline"
+            href="https://linkedin.com/in/nycollaskaique"
+            target="_blank"
+          >
+            Nycollas Kaique
+          </a>
+        </p>
       </div>
     </div>
   );
