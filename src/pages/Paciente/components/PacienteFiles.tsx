@@ -19,7 +19,7 @@ export default function PacienteFiles({ p, path }: PacienteInfoProps) {
   const [indexFile, setIndexFile] = useState<number | null>();
   const [id, setId] = useState<string>();
   const [texto, setTexto] = useState<string>("");
-  const { paciente, excluirPlano, darkMode } = useContext(Context)!;
+  const { paciente, excluirFile, darkMode } = useContext(Context)!;
 
   interface FileAtual {
     data: string;
@@ -47,11 +47,11 @@ export default function PacienteFiles({ p, path }: PacienteInfoProps) {
             [path]: [...paciente![path], { fileName, urlFile, data, id }],
           })
             .then(() => {
-              toast.success(`Adicionado ${path} com sucesso`);
+              toast.success(`Adicionado arquivo com sucesso!`);
               setModalVisivel(false);
             })
             .catch(() => {
-              toast.error("Não foi possível concluir a operação");
+              toast.error("Não foi possível concluir a operação.");
               setModalVisivel(false);
             });
         });
@@ -100,9 +100,10 @@ export default function PacienteFiles({ p, path }: PacienteInfoProps) {
     setModalDeleteVisivel(true);
   }
   function handleConfirmarExclusao() {
-    excluirPlano(
+    excluirFile(
       indexFile!,
-      `${path}/${paciente!.id}/${id}/${fileAtual!.fileName}`
+      `${path}/${paciente!.id}/${id}/${fileAtual!.fileName}`,
+      path
     );
     setModalDeleteVisivel(false);
   }
@@ -200,7 +201,13 @@ export default function PacienteFiles({ p, path }: PacienteInfoProps) {
       )}
       {modalDeleteVisivel && (
         <div className="modal">
-          <div className="modal-content w-[400px]">
+          <div
+            className={`modal-content w-[400px] max-w-[80%] overflow-x-auto ${
+              darkMode
+                ? "bg-[var(--primary-grey)] text-white"
+                : "bg-white text-[var(--primary-grey)]"
+            }`}
+          >
             <h2 className="font-bold mb-2 text-xl">Confirmar Exclusão</h2>
             <p className="mb-2">Tem certeza que deseja excluir?</p>
             <p className="font-bold text-wrap">

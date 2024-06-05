@@ -44,7 +44,7 @@ export function ContaConfig() {
         };
         setUser(data);
         storageUser(data);
-        toast.success("atualizado com sucesso");
+        toast.success("Informações atualizadas com sucesso!");
       });
     } else if (imagemAvatar !== null && nome !== "") {
       handleFileUpload();
@@ -73,7 +73,7 @@ export function ContaConfig() {
             };
             setUser(data);
             storageUser(data);
-            toast.success("atualizado com sucesso");
+            toast.success("Informações atualizadas com sucesso!");
           });
         });
       });
@@ -90,7 +90,7 @@ export function ContaConfig() {
         setImagemAvatar(image);
         setAvatarUrl(URL.createObjectURL(image));
       } else {
-        toast.error("Por favor, selecione imagens tipo PNG, JPG ou JPEG");
+        toast.error("Por favor, selecione imagens do tipo PNG, JPG ou JPEG.");
       }
     }
   }

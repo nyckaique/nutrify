@@ -69,7 +69,11 @@ interface ContextType {
     convenio: string,
     codigoConvenio?: string
   ) => Promise<void>;
-  excluirPlano: (indexPlano: number, filePath: string) => Promise<void>;
+  excluirFile: (
+    indexFile: number,
+    filePath: string,
+    fileType: "exames" | "planos" | "receitas"
+  ) => Promise<void>;
   expanded: boolean;
   setExpanded: (expanded: boolean) => void;
   darkMode: boolean;
@@ -142,12 +146,12 @@ export default function Provider({ children }: ProviderProps) {
           };
           setUser(data);
           storageUser(data);
-          toast.success("Cadastro feio com sucesso");
+          toast.success("Cadastro feito com sucesso!");
           navigate("/home");
         });
       })
       .catch(() => {
-        toast.error("Cadastro deu erro");
+        toast.error("Erro ao realizar cadastro.");
       });
   }
 
@@ -166,11 +170,11 @@ export default function Provider({ children }: ProviderProps) {
         setUser(data);
         storageUser(data);
         loadPacientes(uid);
-        toast.success("Login feio com sucesso");
+        toast.success("Login realizado com sucesso!");
         navigate("/home");
       })
       .catch(() => {
-        toast.error("Login deu erro");
+        toast.error("Erro ao realizar login.");
       });
   }
 
@@ -216,7 +220,7 @@ export default function Provider({ children }: ProviderProps) {
         toast.success("Paciente cadastrado com sucesso!");
       })
       .catch(() => {
-        toast.error("Não foi possível realizar o cadastro no momento");
+        toast.error("Não foi possível realizar o cadastro no momento.");
       });
   }
   function ordenar(a: PacienteResumo, b: PacienteResumo) {
@@ -259,7 +263,7 @@ export default function Provider({ children }: ProviderProps) {
         toast.success("Deletado com sucesso!");
       })
       .catch(() => {
-        toast.error("Não foi possível deletar!");
+        toast.error("Não foi possível deletar.");
       });
   }
 
@@ -314,10 +318,10 @@ export default function Provider({ children }: ProviderProps) {
         historico: novoHistorico,
       })
         .then(() => {
-          toast.success("Consulta atualizada com sucesso");
+          toast.success("Consulta atualizada com sucesso!");
         })
         .catch(() => {
-          toast.error("Não foi possível concluir a operação no momento");
+          toast.error("Não foi possível concluir a operação no momento.");
         });
     } else {
       await updateDoc(docRef, {
@@ -325,10 +329,10 @@ export default function Provider({ children }: ProviderProps) {
         historico: [...paciente!.historico, { data, peso, notas }],
       })
         .then(() => {
-          toast.success("Consulta adicionada com sucesso");
+          toast.success("Consulta adicionada com sucesso!");
         })
         .catch(() => {
-          toast.error("Não foi possível concluir a operação no momento");
+          toast.error("Não foi possível concluir a operação no momento.");
         });
     }
   }
@@ -343,9 +347,9 @@ export default function Provider({ children }: ProviderProps) {
         ...paciente,
         historico: novoHistorico,
       });
-      toast.success("Consulta excluída com sucesso");
+      toast.success("Consulta excluída com sucesso!");
     } catch (error) {
-      toast.error("Não foi possível concluir a operação no momento");
+      toast.error("Não foi possível concluir a operação no momento.");
     }
   }
 
@@ -370,28 +374,32 @@ export default function Provider({ children }: ProviderProps) {
       codigoConvenio: codigoConvenio,
     })
       .then(() => {
-        toast.success("Atualizado com sucesso");
+        toast.success("Informações atualizadas com sucesso!");
       })
       .catch(() => {
-        toast.error("Não foi possível atualizar os dados do paciente");
+        toast.error("Não foi possível concluir a operação no momento.");
       });
   }
 
-  async function excluirPlano(indexPlano: number, filePath: string) {
+  async function excluirFile(
+    indexPlano: number,
+    filePath: string,
+    fileType: "planos" | "exames" | "receitas"
+  ) {
     const docRef = doc(db, "pacientes", paciente!.id);
     const fileRef = ref(storage, filePath);
-    const novoPlano = paciente!.planos.filter(
+    const novoFiles = paciente![fileType].filter(
       (_, index) => index !== indexPlano
     );
     try {
       await updateDoc(docRef, {
         ...paciente,
-        planos: novoPlano,
+        [fileType]: novoFiles,
       });
       await deleteObject(fileRef);
-      toast.success("Plano excluído com sucesso");
+      toast.success("Arquivo excluído com sucesso");
     } catch (error) {
-      toast.error("Não foi possível concluir a operação no momento");
+      toast.error("Não foi possível concluir a operação no momento.");
     }
   }
 
@@ -416,7 +424,7 @@ export default function Provider({ children }: ProviderProps) {
         novaConsulta,
         excluirConsulta,
         atualizarPaciente,
-        excluirPlano,
+        excluirFile,
         expanded,
         setExpanded,
         darkMode,
