@@ -8,7 +8,7 @@ export function Login() {
   return (
     <div className="w-full h-[100vh] flex bg-orange">
       <div className="container-login glassmorphism-container">
-        <Logo />
+        <Logo expanded={true} />
         {isLogando ? (
           <LoginForm setIsLogando={setIsLogando} />
         ) : (

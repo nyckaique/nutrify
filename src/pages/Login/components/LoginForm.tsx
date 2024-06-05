@@ -1,8 +1,9 @@
 import { Context } from "../../../context";
 import { useContext } from "react";
-import { Formik, Field, ErrorMessage } from "formik";
+import { Formik, Field, ErrorMessage, FormikProps } from "formik";
 import * as Yup from "yup";
 import FormContainer from "../../../components/FormContainer";
+import toast from "react-hot-toast";
 
 const initialValuesLogin = {
   email: "",
@@ -31,35 +32,58 @@ export default function LoginForm({ setIsLogando }: FormProps) {
       onSubmit={handleLogin}
       validationSchema={validationSchemaLogin}
     >
-      {({ handleSubmit }) => (
-        <FormContainer
-          title="Login"
-          onSubmit={handleSubmit}
-          toggleForm={() => setIsLogando(false)}
-          toggleText="Faça seu cadastro!"
-        >
-          <div>E-mail</div>
-          <Field
-            name="email"
-            type="email"
-            placeholder="E-mail"
-            className="input-light-text-color p-2 rounded-md glassmorphism-container w-full"
-          />
-          <p className="text-orange text-sm font-bold">
-            <ErrorMessage name="email" />
-          </p>
-          <div>Senha</div>
-          <Field
-            name="password"
-            type="password"
-            placeholder="Senha"
-            className="input-light-text-color p-2 rounded-md glassmorphism-container w-full"
-          />
-          <p className="text-orange text-sm font-bold">
-            <ErrorMessage name="password" />
-          </p>
-        </FormContainer>
-      )}
+      {({
+        handleSubmit,
+        setValues,
+      }: FormikProps<{ email: string; password: string }>) => {
+        const preencherCamposTeste = () => {
+          setValues({
+            email: "nutricionista@teste.com",
+            password: "senha123",
+          });
+          toast.success(
+            <div>
+              Seu acesso de teste está pronto.
+              <br />
+              E-mail: nutricionista@teste.com
+              <br />
+              Senha: senha123
+            </div>
+          );
+        };
+
+        return (
+          <FormContainer
+            title="Login"
+            onSubmit={handleSubmit}
+            toggleForm={() => setIsLogando(false)}
+            toggleText="Faça seu cadastro!"
+            acessoTeste={true}
+            preencherCamposTeste={preencherCamposTeste}
+          >
+            <div>E-mail</div>
+            <Field
+              name="email"
+              type="email"
+              placeholder="E-mail"
+              className="input-light-text-color p-2 rounded-md glassmorphism-container w-full"
+            />
+            <p className="text-orange text-sm font-bold">
+              <ErrorMessage name="email" />
+            </p>
+            <div>Senha</div>
+            <Field
+              name="password"
+              type="password"
+              placeholder="Senha"
+              className="input-light-text-color p-2 rounded-md glassmorphism-container w-full"
+            />
+            <p className="text-orange text-sm font-bold">
+              <ErrorMessage name="password" />
+            </p>
+          </FormContainer>
+        );
+      }}
     </Formik>
   );
 }

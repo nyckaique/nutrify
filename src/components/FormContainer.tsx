@@ -6,6 +6,8 @@ interface FormContainerProps {
   onSubmit: () => void;
   toggleForm: () => void;
   toggleText: string;
+  acessoTeste?: boolean;
+  preencherCamposTeste?: () => void;
 }
 
 export default function FormContainer({
@@ -14,6 +16,8 @@ export default function FormContainer({
   onSubmit,
   toggleForm,
   toggleText,
+  acessoTeste,
+  preencherCamposTeste,
 }: FormContainerProps) {
   return (
     <div className="container-flex-col">
@@ -23,6 +27,15 @@ export default function FormContainer({
         <button type="submit" className="button-orange mx-auto mt-5">
           {title}
         </button>
+        {acessoTeste && preencherCamposTeste && (
+          <button
+            type="button"
+            className="mt-2 underline"
+            onClick={preencherCamposTeste}
+          >
+            Acesso para Teste
+          </button>
+        )}
         <button
           type="button"
           className="mx-auto mt-2 underline"
