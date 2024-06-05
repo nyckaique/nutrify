@@ -1,11 +1,13 @@
 interface LogoProps {
   expanded: boolean;
 }
+import logoImg from "../assets/logo-nutrify.png";
+
 export default function Logo({ expanded }: LogoProps) {
   return (
     <div className="container-flex-col items-center">
       <img
-        src="src\assets\logo-nutrify.png"
+        src={logoImg}
         alt="Nutrify logo"
         className={` ${expanded ? "w-[60px]" : "w-[40px]"} h-auto`}
       />
