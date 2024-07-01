@@ -102,7 +102,7 @@ export default function PacienteFiles({ p, path }: PacienteInfoProps) {
   function handleConfirmarExclusao() {
     excluirFile(
       indexFile!,
-      `${path}/${paciente!.id}/${id}/${fileAtual!.fileName}`,
+      `${path}/${paciente!.id}/${fileAtual!.id}/${fileAtual!.fileName}`,
       path
     );
     setModalDeleteVisivel(false);
@@ -145,22 +145,22 @@ export default function PacienteFiles({ p, path }: PacienteInfoProps) {
 
         <div className="flex flex-col gap-3 py-3 h-full">
           {filesOrdenadas.length > 0 &&
-            filesOrdenadas.map((exame, indexFiles) => (
+            filesOrdenadas.map((arquivo, indexFiles) => (
               <div key={indexFiles}>
                 <button
-                  onClick={() => handleExcluirFile(exame.originalIndex)}
+                  onClick={() => handleExcluirFile(arquivo.originalIndex)}
                   className="mr-4 hover:text-[var(--primary-orange)] w-[30px]"
                 >
                   <i className="fa fa-times" aria-hidden="true"></i>
                 </button>
                 <a
                   className="hover:text-[var(--primary-orange)]"
-                  href={exame.urlFile}
+                  href={arquivo.urlFile}
                   target="_blank"
                 >
-                  {exame.fileName}
+                  {arquivo.fileName}
                 </a>{" "}
-                - {formatarData(exame.data)}
+                - {formatarData(arquivo.data)}
               </div>
             ))}
         </div>
